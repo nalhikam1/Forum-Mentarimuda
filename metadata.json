@@ -1,0 +1,6 @@
+{
+  "name": "Mentarimuda - Forum Komunitas & Ruang Diskusi Pemuda",
+  "description": "Forum pemuda Mentarimuda dengan desain Claymorphism kotak-kotak, dashboard admin, analitik real-time, push notifikasi interaktif, sistem voting polling, Q&A, dan manajemen profil personal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

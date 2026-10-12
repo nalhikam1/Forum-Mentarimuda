@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #F6F4F0;
+    color: #1E293B;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+}
+
+/* Claymorphism Design System Utility Classes */
+.clay-card {
+  background: #FFFFFF;
+  border-radius: 1.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    0 10px 25px -5px rgba(20, 24, 40, 0.06),
+    0 8px 10px -6px rgba(20, 24, 40, 0.04),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.04);
+}
+
+.clay-card-flat {
+  background: #FFFFFF;
+  border-radius: 1rem;
+  border: 1.5px solid rgba(240, 235, 227, 0.9);
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.04),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.clay-card-warm {
+  background: #FFFDF8;
+  border-radius: 1.25rem;
+  border: 2px solid rgba(255, 250, 240, 0.95);
+  box-shadow: 
+    0 12px 28px -6px rgba(234, 88, 12, 0.08),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.95),
+    inset -3px -3px 6px rgba(217, 119, 6, 0.04);
+}
+
+.clay-inset {
+  background: #F2EFEB;
+  border-radius: 0.875rem;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.06),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(230, 224, 215, 0.6);
+}
+
+.clay-btn-primary {
+  background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 0.875rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 6px 16px -2px rgba(234, 88, 12, 0.35),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clay-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 8px 20px -2px rgba(234, 88, 12, 0.45),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.6),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.clay-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 2px 8px rgba(234, 88, 12, 0.3),
+    inset 3px 3px 6px rgba(0, 0, 0, 0.25),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.clay-btn-secondary {
+  background: #FFFFFF;
+  color: #334155;
+  font-weight: 600;
+  border-radius: 0.875rem;
+  border: 1.5px solid rgba(240, 235, 227, 0.95);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clay-btn-secondary:hover {
+  background: #FCFAF7;
+  color: #0F172A;
+  transform: translateY(-1px);
+  box-shadow: 
+    0 6px 16px rgba(0, 0, 0, 0.07),
+    inset 2px 2px 3px rgba(255, 255, 255, 1),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.05);
+}
+
+.clay-btn-secondary:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.08),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.clay-badge {
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #F1ECE5;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
