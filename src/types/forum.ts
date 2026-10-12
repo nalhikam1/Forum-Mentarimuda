@@ -20,6 +20,7 @@ export interface User {
   karma: number; // Poin reputasi Mentari
   joinedDate: string;
   isBanned?: boolean;
+  password?: string;
 }
 
 export interface Category {

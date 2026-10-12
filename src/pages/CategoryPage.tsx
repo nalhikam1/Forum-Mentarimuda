@@ -52,17 +52,17 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ onNavigate }) => {
       {/* Header */}
       <div className="clay-card p-6 md:p-8 bg-gradient-to-r from-amber-50/60 via-white to-orange-50/30 border-2 border-white shadow-lg">
         <div className="max-w-2xl">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-1.5">
             <Layers className="w-4 h-4 text-amber-600" />
-            <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">
-              Kategorisasi Komunitas
+            <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider">
+              Kategori Komunitas
             </span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
-            Eksplorasi Ruang Diskusi Berdasarkan Minatmu
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-900 leading-tight">
+            Eksplorasi Kategori Diskusi
           </h1>
-          <p className="text-xs md:text-sm text-slate-600 mt-2 leading-relaxed">
-            Temukan topik yang relevan dengan perjalanan karir, keterampilan coding, peluang beasiswa, hingga ide bisnis pemuda.
+          <p className="text-xs md:text-sm text-slate-600 mt-1.5 leading-relaxed">
+            Temukan topik sesuai minat: teknologi koding, beasiswa, desain UI/UX, startup, atau bimbingan mentor.
           </p>
         </div>
       </div>

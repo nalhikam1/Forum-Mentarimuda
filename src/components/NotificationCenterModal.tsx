@@ -171,19 +171,21 @@ export const NotificationCenterModal: React.FC<NotificationCenterModalProps> = (
           </div>
         </div>
 
-        {/* Push Simulator Banner */}
-        <div className="p-3 bg-amber-50/50 border-b border-amber-100/60 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs text-amber-900">
-            <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
-            <span>Tes simulasi interaksi langsung antar anggota:</span>
+        {/* Push Simulator Banner — Hanya tampil untuk Admin */}
+        {currentUser.role === 'admin' && (
+          <div className="p-3 bg-amber-50/50 border-b border-amber-100/60 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 text-xs text-amber-900">
+              <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
+              <span>Simulasi notifikasi (Admin):</span>
+            </div>
+            <button
+              onClick={handleSimulate}
+              className="clay-btn-primary px-3 py-1 text-[11px] font-bold shrink-0 shadow-sm"
+            >
+              + Tes Notifikasi
+            </button>
           </div>
-          <button
-            onClick={handleSimulate}
-            className="clay-btn-primary px-3 py-1 text-[11px] font-bold shrink-0 shadow-sm"
-          >
-            + Simulasikan Notif
-          </button>
-        </div>
+        )}
 
         {/* Notifications List */}
         <div className="flex-1 overflow-y-auto divide-y divide-slate-100 p-2 space-y-1">

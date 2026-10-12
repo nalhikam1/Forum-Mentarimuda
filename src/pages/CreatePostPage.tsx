@@ -139,8 +139,26 @@ export const CreatePostPage: React.FC<CreatePostPageProps> = ({
             <span className="text-xs font-bold text-slate-700 truncate max-w-[120px]">
               {currentUser.displayName}
             </span>
+            <span className="text-[10px] text-slate-400 capitalize">
+              ({currentUser.role})
+            </span>
           </div>
         </div>
+
+        {currentUser.role === 'guest' && (
+          <div className="mt-4 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center justify-between gap-3 flex-wrap">
+            <p className="text-xs text-amber-900 leading-snug">
+              Anda sedang dalam <b>Mode Tamu</b>. Postingan akan memiliki label [Tamu]. Ingin memiliki nama profil permanen atau login admin?
+            </p>
+            <button
+              type="button"
+              onClick={onOpenAuth}
+              className="clay-btn-primary px-3 py-1.5 text-xs font-bold shrink-0"
+            >
+              Masuk / Daftar Akun
+            </button>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           {/* Post Type Selector (Clay Tabs) */}
@@ -159,8 +177,8 @@ export const CreatePostPage: React.FC<CreatePostPageProps> = ({
                 }`}
               >
                 <MessageSquare className="w-5 h-5 text-amber-600" />
-                <span className="text-xs font-bold">Diskusi Santai</span>
-                <span className="text-[10px] text-slate-400 hidden sm:inline">Opini, wawasan, cerita</span>
+                <span className="text-xs font-bold">Diskusi</span>
+                <span className="text-[10px] text-slate-400 hidden sm:inline">Ide & opini</span>
               </button>
 
               <button
@@ -173,8 +191,8 @@ export const CreatePostPage: React.FC<CreatePostPageProps> = ({
                 }`}
               >
                 <HelpCircle className="w-5 h-5 text-sky-600" />
-                <span className="text-xs font-bold">Tanya Jawab (Q&A)</span>
-                <span className="text-[10px] text-slate-400 hidden sm:inline">Solusi terverifikasi</span>
+                <span className="text-xs font-bold">Q&A</span>
+                <span className="text-[10px] text-slate-400 hidden sm:inline">Tanya solusi</span>
               </button>
 
               <button
@@ -187,8 +205,8 @@ export const CreatePostPage: React.FC<CreatePostPageProps> = ({
                 }`}
               >
                 <Vote className="w-5 h-5 text-purple-600" />
-                <span className="text-xs font-bold">Polling Suara</span>
-                <span className="text-[10px] text-slate-400 hidden sm:inline">Voting real-time</span>
+                <span className="text-xs font-bold">Polling</span>
+                <span className="text-[10px] text-slate-400 hidden sm:inline">Voting suara</span>
               </button>
             </div>
           </div>

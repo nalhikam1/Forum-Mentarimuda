@@ -217,7 +217,7 @@ export const PostDetailPage: React.FC<PostDetailPageProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {post.isPinned && (
               <span className="flex items-center gap-1 text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
                 <Pin className="w-3.5 h-3.5 text-amber-600" />
@@ -235,6 +235,48 @@ export const PostDetailPage: React.FC<PostDetailPageProps> = ({
                 <Lock className="w-3.5 h-3.5" />
                 <span>Terkunci</span>
               </span>
+            )}
+
+            {/* Admin-only quick actions */}
+            {currentUser.role === 'admin' && (
+              <div className="flex items-center gap-1 pl-2 border-l border-slate-200">
+                <button
+                  onClick={() => {
+                    storageService.togglePinPost(post.id);
+                    loadData();
+                  }}
+                  className={`p-1.5 rounded-lg border text-xs font-bold transition-colors ${
+                    post.isPinned ? 'bg-amber-100 border-amber-300 text-amber-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                  }`}
+                  title={post.isPinned ? 'Lepas Sematan' : 'Sematkan Topik'}
+                >
+                  <Pin className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => {
+                    storageService.toggleLockPost(post.id);
+                    loadData();
+                  }}
+                  className={`p-1.5 rounded-lg border text-xs font-bold transition-colors ${
+                    post.isLocked ? 'bg-slate-200 border-slate-300 text-slate-800' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                  }`}
+                  title={post.isLocked ? 'Buka Kunci' : 'Kunci Komentar'}
+                >
+                  <Lock className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm('Hapus topik ini secara permanen?')) {
+                      storageService.deletePost(post.id);
+                      onNavigate('');
+                    }
+                  }}
+                  className="p-1.5 rounded-lg border border-rose-200 text-rose-500 hover:bg-rose-50"
+                  title="Hapus Topik (Admin)"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
             )}
           </div>
         </div>

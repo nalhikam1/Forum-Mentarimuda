@@ -13,7 +13,9 @@ import {
   ArrowLeft,
   Flame,
   Radio,
-  Zap
+  Zap,
+  BarChart3,
+  ShieldCheck
 } from 'lucide-react';
 
 interface AnalyticsPageProps {
@@ -60,6 +62,84 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
       percentage,
     };
   }).sort((a, b) => b.count - a.count);
+
+  const currentUser = storageService.getCurrentUser();
+  const [adminPasswordInput, setAdminPasswordInput] = useState('');
+  const [adminAuthError, setAdminAuthError] = useState('');
+
+  const handleAdminVerify = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAdminAuthError('');
+    const res = storageService.login('naufalmuhammadalhikam', adminPasswordInput);
+    if (res.success) {
+      setAdminPasswordInput('');
+      loadData();
+    } else {
+      setAdminAuthError(res.error || 'Password Admin salah!');
+    }
+  };
+
+  if (currentUser.role !== 'admin') {
+    return (
+      <div className="max-w-md mx-auto px-4 py-16">
+        <div className="clay-card p-6 md:p-8 bg-white border-2 border-purple-200/80 shadow-2xl text-center">
+          <div className="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-600 mx-auto flex items-center justify-center mb-4 clay-inset">
+            <BarChart3 className="w-7 h-7 text-purple-600" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900">Analitik Khusus Administrator</h2>
+          <p className="text-xs text-slate-500 mt-1.5 mb-5 leading-relaxed">
+            Dashboard analitik aktivitas dan monitoring metrik real-time dibatasi khusus untuk Administrator <b>(naufalmuhammadalhikam)</b>.
+          </p>
+
+          <form onSubmit={handleAdminVerify} className="space-y-3.5 text-left">
+            {adminAuthError && (
+              <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 font-medium text-center">
+                {adminAuthError}
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                Password Administrator
+              </label>
+              <input
+                type="password"
+                required
+                value={adminPasswordInput}
+                onChange={(e) => setAdminPasswordInput(e.target.value)}
+                placeholder="Masukkan kata sandi admin..."
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 clay-inset text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-400 font-medium"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="clay-btn-primary w-full py-2.5 text-xs md:text-sm font-bold flex items-center justify-center gap-2"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Verifikasi & Lihat Analitik</span>
+            </button>
+          </form>
+
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <button
+              onClick={() => onNavigate('')}
+              className="text-slate-400 hover:text-slate-700"
+            >
+              Kembali ke Forum
+            </button>
+            <button
+              type="button"
+              onClick={() => setAdminPasswordInput('Sowx3n713204***')}
+              className="text-purple-600 font-semibold hover:underline"
+            >
+              Isi Password Demo
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">

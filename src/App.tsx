@@ -171,9 +171,13 @@ export default function App() {
           <div className="flex items-center gap-4 flex-wrap">
             <button onClick={() => navigateTo('')} className="hover:text-slate-800">Beranda</button>
             <button onClick={() => navigateTo('kategori')} className="hover:text-slate-800">Kategori</button>
-            <button onClick={() => navigateTo('analitik')} className="hover:text-slate-800">Analitik</button>
-            <button onClick={() => navigateTo('admin')} className="hover:text-slate-800">Admin Panel</button>
-            <button onClick={() => setIsAuthOpen(true)} className="hover:text-amber-600 font-semibold">Mode Tamu / Ganti Akun</button>
+            {storageService.getCurrentUser().role === 'admin' && (
+              <>
+                <button onClick={() => navigateTo('analitik')} className="text-purple-700 hover:text-purple-900 font-semibold">Analitik (Admin)</button>
+                <button onClick={() => navigateTo('admin')} className="text-rose-700 hover:text-rose-900 font-semibold">Admin Panel</button>
+              </>
+            )}
+            <button onClick={() => setIsAuthOpen(true)} className="hover:text-amber-600 font-semibold">Akun / Tamu</button>
           </div>
 
           <div className="text-slate-400">

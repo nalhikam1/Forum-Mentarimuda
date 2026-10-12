@@ -11,14 +11,14 @@ import {
 } from '../types/forum';
 
 const STORAGE_KEYS = {
-  POSTS: 'mentarimuda_posts_v2',
-  CATEGORIES: 'mentarimuda_categories_v2',
-  COMMENTS: 'mentarimuda_comments_v2',
-  USERS: 'mentarimuda_users_v2',
-  CURRENT_USER_ID: 'mentarimuda_current_user_id_v2',
-  NOTIFICATIONS: 'mentarimuda_notifications_v2',
-  ANNOUNCEMENTS: 'mentarimuda_announcements_v2',
-  ACTIVITIES: 'mentarimuda_activities_v2',
+  POSTS: 'mentarimuda_posts_v3',
+  CATEGORIES: 'mentarimuda_categories_v3',
+  COMMENTS: 'mentarimuda_comments_v3',
+  USERS: 'mentarimuda_users_v3',
+  CURRENT_USER_ID: 'mentarimuda_current_user_id_v3',
+  NOTIFICATIONS: 'mentarimuda_notifications_v3',
+  ANNOUNCEMENTS: 'mentarimuda_announcements_v3',
+  ACTIVITIES: 'mentarimuda_activities_v3',
 };
 
 // Seed Categories
@@ -27,19 +27,19 @@ const SEED_CATEGORIES: Category[] = [
     id: 'cat-1',
     name: 'Teknologi & Koding',
     slug: 'teknologi-koding',
-    description: 'Diskusi web development, AI engineering, arsitektur software, dan tips coding modern.',
+    description: 'Web development, AI engineering, arsitektur software, dan tips coding modern.',
     color: 'sky',
     iconName: 'Code',
-    threadCount: 14,
+    threadCount: 0,
   },
   {
     id: 'cat-2',
     name: 'Karir & Beasiswa',
     slug: 'karir-beasiswa',
-    description: 'Peluang magang, beasiswa S1/S2 dalam & luar negeri, review CV ATS, dan tips interview.',
+    description: 'Peluang magang, beasiswa S1/S2, review CV ATS, dan persiapan wawancara.',
     color: 'emerald',
     iconName: 'GraduationCap',
-    threadCount: 19,
+    threadCount: 0,
   },
   {
     id: 'cat-3',
@@ -48,130 +48,80 @@ const SEED_CATEGORIES: Category[] = [
     description: 'UI/UX design, visual branding, claymorphism, 3D asset, dan portfolio showcase.',
     color: 'rose',
     iconName: 'Palette',
-    threadCount: 8,
+    threadCount: 0,
   },
   {
     id: 'cat-4',
     name: 'Bisnis & Startup',
     slug: 'bisnis-startup',
-    description: 'Validasi ide bisnis pemuda, growth hacking, manajemen finansial, dan freelance.',
+    description: 'Validasi ide bisnis pemuda, growth hacking, finansial, dan freelance.',
     color: 'amber',
     iconName: 'TrendingUp',
-    threadCount: 11,
+    threadCount: 0,
   },
   {
     id: 'cat-5',
     name: 'Tanya Mentor',
     slug: 'tanya-mentor',
-    description: 'Tanya jawab seputar problem teknis, karir, dan bimbingan langsung dari senior komunitas.',
+    description: 'Tanya jawab seputar problem teknis, karir, dan bimbingan langsung mentor.',
     color: 'purple',
     iconName: 'HelpCircle',
-    threadCount: 23,
+    threadCount: 0,
   },
   {
     id: 'cat-6',
     name: 'Cerita & Santai',
     slug: 'cerita-santai',
-    description: 'Ruang ngobrol santai, sharing pengalaman kuliah/kerja, hobi, dan diskusi kasual.',
+    description: 'Ruang ngobrol santai, sharing pengalaman, hobi, dan diskusi kasual.',
     color: 'orange',
     iconName: 'Coffee',
-    threadCount: 15,
+    threadCount: 0,
   },
 ];
 
-// Seed Users
-const SEED_USERS: User[] = [
-  {
-    id: 'user-admin',
-    username: 'admin_mentari',
-    displayName: 'Karisma Mentari (Admin)',
-    email: 'admin@mentarimuda.id',
-    role: 'admin',
-    avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=karisma_mentari&backgroundColor=ffd5dc,d1d4f9,c0aede',
-    bio: 'Penggerak komunitas Mentarimuda. Fokus membakar semangat kolaborasi dan inovasi pemuda nusantara.',
-    location: 'Jakarta, Indonesia',
-    website: 'https://mentarimuda.id',
-    interests: ['Community Building', 'EdTech', 'Social Innovation'],
-    badges: ['Pionir Mentari', 'Admin Komunitas', 'Super Verifikasi'],
-    postCount: 5,
-    answerCount: 18,
-    solutionsCount: 8,
-    karma: 1450,
-    joinedDate: '2025-01-10T08:00:00Z',
-  },
-  {
-    id: 'user-budi',
-    username: 'budi_developer',
-    displayName: 'Budi Santoso',
-    email: 'budi@techmail.id',
-    role: 'member',
-    avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=budi_santoso&backgroundColor=b6e3f4,c0aede',
-    bio: 'Frontend Engineer antusias React, TypeScript, dan Tailwind CSS. Senang berbagi solusi teknis.',
-    location: 'Bandung, Indonesia',
-    website: 'https://github.com/budidev',
-    interests: ['React', 'TypeScript', 'Tailwind', 'Next.js'],
-    badges: ['Top Kontributor', 'Pemberi Solusi', 'Tech Specialist'],
-    postCount: 8,
-    answerCount: 24,
-    solutionsCount: 12,
-    karma: 980,
-    joinedDate: '2025-02-15T09:30:00Z',
-  },
-  {
-    id: 'user-siti',
-    username: 'siti_beasiswa',
-    displayName: 'Siti Rahmawati',
-    email: 'siti.awardee@campus.ac.id',
-    role: 'moderator',
-    avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=siti_rahmawati&backgroundColor=d1d4f9,ffdfbf',
-    bio: 'Awardee Beasiswa LPDP 2025. Mentor essay scholarship, persiapan IELTS, dan tips interview.',
-    location: 'Yogyakarta, Indonesia',
-    website: 'https://linkedin.com/in/sitirahmawati',
-    interests: ['Scholarship', 'Education', 'Public Speaking', 'IELTS'],
-    badges: ['Mentor Teladan', 'Moderator', 'Pionir Mentari'],
-    postCount: 6,
-    answerCount: 19,
-    solutionsCount: 9,
-    karma: 1120,
-    joinedDate: '2025-01-20T11:00:00Z',
-  },
-  {
-    id: 'user-dimas',
-    username: 'dimas_uiux',
-    displayName: 'Dimas Ardiansyah',
-    email: 'dimas@studioclay.design',
-    role: 'member',
-    avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=dimas_ardiansyah&backgroundColor=ffd5dc,b6e3f4',
-    bio: 'Product Designer yang terobsesi dengan Claymorphism, micro-interactions, dan visual craft.',
-    location: 'Surabaya, Indonesia',
-    website: 'https://dribbble.com/dimasdesign',
-    interests: ['Figma', 'Claymorphism', 'Design System', 'Accessibility'],
-    badges: ['Kreator Visual', 'Anggota Aktif'],
-    postCount: 4,
-    answerCount: 7,
-    solutionsCount: 3,
-    karma: 430,
-    joinedDate: '2025-03-01T14:15:00Z',
-  },
-  {
-    id: 'user-guest',
-    username: 'tamu_mentari',
-    displayName: 'Tamu Mentari #108',
-    email: 'guest@mentarimuda.id',
-    role: 'guest',
-    avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=guest_mentari&backgroundColor=e2e8f0',
-    bio: 'Pengunjung kasual di Forum Mentarimuda. Anda dapat mencoba posting atau membuat akun permanen dengan 1-klik!',
-    location: 'Indonesia',
-    badges: ['Pengunjung Kasual'],
-    postCount: 0,
-    answerCount: 0,
-    solutionsCount: 0,
-    karma: 10,
-    joinedDate: new Date().toISOString(),
-  },
-];
+// Single Admin User as specified by the user
+const ADMIN_USER: User = {
+  id: 'user-admin',
+  username: 'naufalmuhammadalhikam',
+  displayName: 'Naufal Muhammad Al Hikam',
+  email: 'naufalmuhammadalhikam@mentarimuda.id',
+  password: 'Sowx3n713204***',
+  role: 'admin',
+  avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=naufalmuhammadalhikam&backgroundColor=ffd5dc,d1d4f9,c0aede',
+  bio: 'Founder & Administrator Komunitas Mentarimuda. Fokus pada inovasi teknologi pemuda, kolaborasi riset, dan ekosistem digital nusantara.',
+  location: 'Indonesia',
+  website: 'https://mentarimuda.id',
+  interests: ['Tech Leadership', 'Fullstack Web', 'Youth Empowerment', 'AI Engineering'],
+  badges: ['Founder Mentarimuda', 'Admin Utama', 'Pionir Komunitas', 'Verifikasi Resmi'],
+  postCount: 5,
+  answerCount: 15,
+  solutionsCount: 6,
+  karma: 2850,
+  joinedDate: '2025-01-01T00:00:00Z',
+};
 
-// Seed Posts
+// Default Guest User for casual visits
+const GUEST_USER: User = {
+  id: 'user-guest',
+  username: 'tamu_mentari',
+  displayName: 'Tamu Mentari',
+  email: 'guest@mentarimuda.id',
+  role: 'guest',
+  avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=guest_mentari&backgroundColor=e2e8f0',
+  bio: 'Pengunjung kasual di Forum Mentarimuda. Anda dapat membaca, voting, dan berkomentar dengan mode tamu, atau mendaftar akun.',
+  location: 'Indonesia',
+  badges: ['Pengunjung Kasual'],
+  postCount: 0,
+  answerCount: 0,
+  solutionsCount: 0,
+  karma: 10,
+  joinedDate: new Date().toISOString(),
+};
+
+// Only Admin and Guest exist by default
+const SEED_USERS: User[] = [ADMIN_USER, GUEST_USER];
+
+// Seed Posts — All authored by Admin (Naufal Muhammad Al Hikam)
 const SEED_POSTS: Post[] = [
   {
     id: 'post-1',
@@ -183,25 +133,25 @@ Silakan berikan voting kalian di bawah dan sertakan alasan di kolom komentar unt
     type: 'polling',
     categorySlug: 'teknologi-koding',
     tags: ['Koding', 'Karir', 'WebDev', 'FreshGraduate'],
-    authorId: 'user-budi',
-    authorName: 'Budi Santoso',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=budi_santoso&backgroundColor=b6e3f4,c0aede',
-    authorRole: 'member',
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
+    authorRole: 'admin',
     createdAt: new Date(Date.now() - 3600000 * 4).toISOString(),
-    views: 342,
-    likes: 28,
-    likedByUserIds: ['user-admin', 'user-siti', 'user-dimas'],
-    commentCount: 4,
+    views: 420,
+    likes: 35,
+    likedByUserIds: [ADMIN_USER.id],
+    commentCount: 2,
     isPinned: true,
     pollData: {
       question: 'Stack koding mana yang paling esensial dikuasai pemuda di 2026?',
-      totalVotes: 87,
+      totalVotes: 98,
       allowMultiple: false,
       options: [
-        { id: 'opt-1', text: 'TypeScript + React/Next.js & Modern CSS', voteCount: 42, voterIds: ['user-budi', 'user-dimas'] },
-        { id: 'opt-2', text: 'Python + AI Agents / Data Engineering', voteCount: 26, voterIds: ['user-admin'] },
-        { id: 'opt-3', text: 'Go (Golang) / Rust untuk High Performance Backend', voteCount: 13, voterIds: [] },
-        { id: 'opt-4', text: 'Mobile Flutter / Kotlin Multiplatform', voteCount: 6, voterIds: [] },
+        { id: 'opt-1', text: 'TypeScript + React/Next.js & Modern CSS', voteCount: 48, voterIds: [ADMIN_USER.id] },
+        { id: 'opt-2', text: 'Python + AI Agents / Data Engineering', voteCount: 31, voterIds: [] },
+        { id: 'opt-3', text: 'Go (Golang) / Rust untuk High Performance Backend', voteCount: 14, voterIds: [] },
+        { id: 'opt-4', text: 'Mobile Flutter / Kotlin Multiplatform', voteCount: 5, voterIds: [] },
       ],
     },
   },
@@ -209,79 +159,79 @@ Silakan berikan voting kalian di bawah dan sertakan alasan di kolom komentar unt
     id: 'post-2',
     slug: 'bagaimana-cara-menyusun-cv-ats-friendly-untuk-beasiswa-lpdp',
     title: 'Tanya: Bagaimana cara menyusun CV ATS-friendly untuk beasiswa LPDP dan magang multinasional?',
-    content: `Halo semua mentor! Saya mahasiswa semester 6 yang sedang mempersiapkan diri mendaftar beasiswa LPDP tahap depan sekaligus magang di perusahaan multinasional.
+    content: `Halo rekan-rekan Mentarimuda! Bagi kalian yang sedang mempersiapkan diri mendaftar beasiswa LPDP maupun magang di institusi multinasional, salah satu filter awal adalah screening Applicant Tracking System (ATS).
 
-Saya sering mendengar bahwa CV harus lulus screening software ATS (Applicant Tracking System). Pertanyaan saya:
-1. Format template seperti apa yang paling aman (format kolom tunggal vs dua kolom)?
-2. Bagaimana cara mengukur impact (metrik kuantitatif) jika pengalaman organisasi saya belum memiliki angka besar?
-3. Apakah format PDF selalu terbaca dengan akurat?
+Poin penting yang sering menjadi pertanyaan:
+1. Format template seperti apa yang paling aman (format single column vs dua kolom)?
+2. Bagaimana cara mengukur impact (metrik kuantitatif) jika pengalaman organisasi belum memiliki data angka besar?
+3. Apakah format PDF selalu terbaca akurat oleh semua parser?
 
-Mohon masukan dan tips praktisnya!`,
+Simak pembahasan dan solusi terverifikasi di bawah ini!`,
     type: 'pertanyaan',
     categorySlug: 'karir-beasiswa',
     tags: ['Beasiswa', 'LPDP', 'CV-ATS', 'Karir'],
-    authorId: 'user-dimas',
-    authorName: 'Dimas Ardiansyah',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=dimas_ardiansyah&backgroundColor=ffd5dc,b6e3f4',
-    authorRole: 'member',
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
+    authorRole: 'admin',
     createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
-    views: 512,
-    likes: 45,
-    likedByUserIds: ['user-admin', 'user-budi', 'user-siti'],
-    commentCount: 3,
+    views: 590,
+    likes: 54,
+    likedByUserIds: [ADMIN_USER.id],
+    commentCount: 2,
     isSolved: true,
-    acceptedCommentId: 'comment-siti-1',
+    acceptedCommentId: 'comment-admin-solusi',
   },
   {
     id: 'post-3',
     slug: 'membangun-side-income-dari-produk-digital-tanpa-burnout',
     title: 'Diskusi: Membangun Side-Income dari Produk Digital bagi Pemuda tanpa Terjebak Burnout',
-    content: `Banyak dari kita yang ingin mulai memonetisasi skill kreatif maupun teknis di waktu luang (membuat template Figma, micro SaaS, konten edukasi, Notion templates, atau assets). Namun tantangan terbesarnya adalah konsistensi dan manajemen energi setelah seharian bekerja atau kuliah.
+    content: `Banyak pemuda yang ingin mulai memonetisasi keterampilan kreatif maupun teknis di waktu luang (membuat template, micro-SaaS, konten edukasi, Notion templates, atau assets digital). Namun tantangan terbesarnya adalah konsistensi dan manajemen energi setelah seharian bekerja atau kuliah.
 
-Berikut 3 prinsip yang saya terapkan:
-1. **Aturan 45 Menit Terfokus**: Alih-alih maraton 5 jam di akhir pekan, luangkan 45 menit setiap pagi sebelum rutinitas dimulai.
-2. **Reuse & Repurpose**: Jangan buat materi dari nol, dokumentasikan apa yang sedang dipelajari sehari-hari.
+Berikut 3 prinsip utama yang saya terapkan di komunitas Mentarimuda:
+1. **Aturan 45 Menit Terfokus**: Alih-alih maraton 5 jam di akhir pekan, luangkan 45 menit setiap pagi sebelum rutinitas harian dimulai.
+2. **Reuse & Repurpose**: Jangan buat materi dari nol, dokumentasikan apa yang sedang kamu pelajari sehari-hari.
 3. **Validasi Cepat di Komunitas**: Tanyakan langsung ke calon audiens di forum seperti Mentarimuda sebelum menghabiskan waktu berminggu-minggu membangun produk.
 
 Bagaimana pengalaman rekan-rekan sekalian? Apa metode favorit kalian dalam menjaga produktivitas sehat?`,
     type: 'diskusi',
     categorySlug: 'bisnis-startup',
     tags: ['SideIncome', 'Produktivitas', 'DigitalProduct', 'Mindset'],
-    authorId: 'user-admin',
-    authorName: 'Karisma Mentari (Admin)',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=karisma_mentari&backgroundColor=ffd5dc,d1d4f9,c0aede',
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
     authorRole: 'admin',
     createdAt: new Date(Date.now() - 3600000 * 20).toISOString(),
-    views: 670,
-    likes: 62,
-    likedByUserIds: ['user-budi', 'user-dimas', 'user-siti'],
-    commentCount: 5,
+    views: 730,
+    likes: 68,
+    likedByUserIds: [ADMIN_USER.id],
+    commentCount: 1,
   },
   {
     id: 'post-4',
     slug: 'polling-kebiasaan-kerja-favorit-wfa-hybrid-atau-kantor',
     title: 'Polling: Gaya Bekerja Mana yang Paling Bikin Kamu Produktif & Bahagia?',
-    content: `Diskusi seputar kultur kerja masa kini: Di antara 3 model kerja berikut, mana yang menurutmu memberikan keseimbangan hidup dan akselerasi karir terbaik? Berikan suaramu!`,
+    content: `Diskusi seputar kultur kerja masa kini: Di antara 3 model kerja berikut, mana yang menurutmu memberikan keseimbangan hidup dan akselerasi karir terbaik bagi generasi muda? Berikan suaramu!`,
     type: 'polling',
     categorySlug: 'cerita-santai',
     tags: ['WorkLife', 'WFA', 'Hybrid', 'Opini'],
-    authorId: 'user-siti',
-    authorName: 'Siti Rahmawati',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=siti_rahmawati&backgroundColor=d1d4f9,ffdfbf',
-    authorRole: 'moderator',
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
+    authorRole: 'admin',
     createdAt: new Date(Date.now() - 3600000 * 30).toISOString(),
-    views: 290,
-    likes: 19,
-    likedByUserIds: ['user-admin'],
-    commentCount: 2,
+    views: 310,
+    likes: 24,
+    likedByUserIds: [ADMIN_USER.id],
+    commentCount: 1,
     pollData: {
       question: 'Gaya kerja idaman generasi muda saat ini:',
-      totalVotes: 64,
+      totalVotes: 75,
       allowMultiple: false,
       options: [
-        { id: 'opt-wfa-1', text: '100% Remote / Work From Anywhere (Bebas lokasi)', voteCount: 39, voterIds: ['user-siti'] },
-        { id: 'opt-wfa-2', text: 'Hybrid (2-3 hari kantor, sisanya fleksibel di rumah/kafe)', voteCount: 21, voterIds: ['user-admin'] },
-        { id: 'opt-wfa-3', text: '100% On-site Kantor (Kolaborasi tatap muka langsung)', voteCount: 4, voterIds: [] },
+        { id: 'opt-wfa-1', text: '100% Remote / Work From Anywhere (Bebas lokasi)', voteCount: 46, voterIds: [ADMIN_USER.id] },
+        { id: 'opt-wfa-2', text: 'Hybrid (2-3 hari kantor, sisanya fleksibel di rumah/kafe)', voteCount: 24, voterIds: [] },
+        { id: 'opt-wfa-3', text: '100% On-site Kantor (Kolaborasi tatap muka langsung)', voteCount: 5, voterIds: [] },
       ],
     },
   },
@@ -289,21 +239,24 @@ Bagaimana pengalaman rekan-rekan sekalian? Apa metode favorit kalian dalam menja
     id: 'post-5',
     slug: 'pertanyaan-cara-belajar-claymorphism-ui-di-tailwind-css',
     title: 'Tanya: Prinsip Bayangan & Inner Highlight untuk Desain Claymorphism di CSS?',
-    content: `Saya sedang bereksperimen membuat antarmuka bergaya Claymorphism (kotak-kotak empuk 3D seperti mainan tanah liat). 
+    content: `Dalam mendesain antarmuka bergaya Claymorphism (kotak-kotak empuk 3D seperti mainan tanah liat), kunci utamanya terletak pada perpaduan dua lapis bayangan:
 
-Namun seringkali bayangannya terlihat terlalu kotor atau flat. Apakah ada formula kombinasi drop-shadow dan inner-shadow yang pas agar terlihat halus, cerah, dan ramah di mata?`,
+1. Drop-shadow luar yang lembut dan menyebar.
+2. Inner highlight di sudut kiri-atas dipadukan rim shadow di sudut kanan-bawah.
+
+Apakah rekan-rekan memiliki trik CSS khusus untuk mengoptimalkan performa rendering grafis clay pada browser mobile?`,
     type: 'pertanyaan',
     categorySlug: 'kreativitas-desain',
     tags: ['Claymorphism', 'CSS', 'UIUX', 'DesignSystem'],
-    authorId: 'user-budi',
-    authorName: 'Budi Santoso',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=budi_santoso&backgroundColor=b6e3f4,c0aede',
-    authorRole: 'member',
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
+    authorRole: 'admin',
     createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
-    views: 420,
-    likes: 31,
-    likedByUserIds: ['user-dimas'],
-    commentCount: 2,
+    views: 460,
+    likes: 42,
+    likedByUserIds: [ADMIN_USER.id],
+    commentCount: 1,
     isSolved: false,
   },
 ];
@@ -311,81 +264,93 @@ Namun seringkali bayangannya terlihat terlalu kotor atau flat. Apakah ada formul
 // Seed Comments
 const SEED_COMMENTS: Comment[] = [
   {
-    id: 'comment-siti-1',
+    id: 'comment-admin-solusi',
     postId: 'post-2',
     parentId: null,
-    authorId: 'user-siti',
-    authorName: 'Siti Rahmawati',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=siti_rahmawati&backgroundColor=d1d4f9,ffdfbf',
-    authorRole: 'moderator',
-    authorBadges: ['Mentor Teladan', 'Moderator'],
-    content: `Halo Dimas! Senang sekali melihat antusiasmemu. Sebagai reviewer beasiswa dan alumni penerima LPDP, ini 3 kunci utamanya:
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
+    authorRole: 'admin',
+    authorBadges: ['Founder Mentarimuda', 'Admin Utama'],
+    content: `Panduan resmi penyusunan CV ATS untuk seleksi beasiswa dan magang:
 
-1. **Tata Letak Satu Kolom (Single Column)**: Format 1 kolom adalah yang paling 100% aman untuk semua parser ATS. Hindari tabel tak kasat mata atau grafik progress bar skill.
-2. **Rumus XYZ Google untuk Impact**: "Mencapai [X], yang diukur dengan [Y], dengan melakukan [Z]". Misalnya: *"Mengkoordinir 15 panitia dalam seminar beasiswa kampus, menjaring 450+ peserta (naik 30% dari tahun lalu) melalui kampanye media sosial terarah"*.
-3. **Standar Font & Format File**: Gunakan font modern bersih (seperti Plus Jakarta Sans, Calibri, atau Arial) ukuran 10-11pt. Selalu simpan dalam format PDF standar tanpa proteksi password.
-
-Semoga sukses persiapannya! Jika butuh review essay, bisa tag saya di kategori Tanya Mentor.`,
-    createdAt: new Date(Date.now() - 3600000 * 11).toISOString(),
-    likes: 38,
-    likedByUserIds: ['user-dimas', 'user-budi', 'user-admin'],
+1. **Tata Letak Single Column**: Format 1 kolom adalah standar paling aman untuk semua parser ATS. Hindari tabel tak kasat mata atau grafik level skill.
+2. **Formula Google XYZ**: "Mencapai [X], diukur dengan [Y], dengan melakukan [Z]". Contoh: "Mengkoordinasi 15 anggota tim dalam program mentoring, meningkatkan kepuasan peserta sebesar 28% melalui kurikulum terstruktur".
+3. **Format & Font Standar**: Gunakan font bersih (Plus Jakarta Sans, Calibri, atau Arial) ukuran 10-11pt dan simpan sebagai file PDF standar.`,
+    createdAt: new Date(Date.now() - 3600000 * 10).toISOString(),
+    likes: 29,
+    likedByUserIds: [ADMIN_USER.id],
     isAcceptedSolution: true,
   },
   {
-    id: 'comment-dimas-reply',
+    id: 'comment-guest-1',
     postId: 'post-2',
-    parentId: 'comment-siti-1',
-    authorId: 'user-dimas',
-    authorName: 'Dimas Ardiansyah',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=dimas_ardiansyah&backgroundColor=ffd5dc,b6e3f4',
-    authorRole: 'member',
-    authorBadges: ['Kreator Visual'],
-    content: `Terima kasih banyak Kak Siti atas penjelasan yang sangat detail dan aplikatif! Formula XYZ Google langsung saya terapkan pada poin pengalaman organisasi saya. Saya tandai jawaban ini sebagai Jawaban Terbaik (Solusi)!`,
-    createdAt: new Date(Date.now() - 3600000 * 10).toISOString(),
-    likes: 12,
-    likedByUserIds: ['user-siti'],
-  },
-  {
-    id: 'comment-budi-p2',
-    postId: 'post-2',
-    parentId: null,
-    authorId: 'user-budi',
-    authorName: 'Budi Santoso',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=budi_santoso&backgroundColor=b6e3f4,c0aede',
-    authorRole: 'member',
-    authorBadges: ['Top Kontributor'],
-    content: `Tambahan sedikit dari sisi teknis: hindari menaruh informasi penting di bagian header atau footer Microsoft Word, karena parser ATS tertentu mengabaikan area tersebut saat ekstraksi teks.`,
-    createdAt: new Date(Date.now() - 3600000 * 8).toISOString(),
-    likes: 14,
-    likedByUserIds: ['user-dimas'],
+    parentId: 'comment-admin-solusi',
+    authorId: 'user-guest',
+    authorName: 'Tamu Mentari',
+    authorAvatar: GUEST_USER.avatar,
+    authorRole: 'guest',
+    authorBadges: ['Pengunjung Kasual'],
+    content: 'Terima kasih atas panduannya, Admin Naufal! Formula Google XYZ sangat aplikatif dan membantu sekali.',
+    createdAt: new Date(Date.now() - 3600000 * 9).toISOString(),
+    likes: 7,
+    likedByUserIds: [ADMIN_USER.id],
   },
   {
     id: 'comment-admin-poll',
     postId: 'post-1',
     parentId: null,
-    authorId: 'user-admin',
-    authorName: 'Karisma Mentari (Admin)',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=karisma_mentari&backgroundColor=ffd5dc,d1d4f9,c0aede',
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
     authorRole: 'admin',
-    authorBadges: ['Pionir Mentari', 'Admin'],
-    content: `Saya vote opsi Python + AI Agents! Sekarang banyak perusahaan yang menghargai fresh graduate yang tidak hanya paham CRUD, tapi juga mampu mengintegrasikan model AI, prompt pipeline, dan workflow automasi.`,
+    authorBadges: ['Founder Mentarimuda', 'Admin Utama'],
+    content: 'Kombinasi TypeScript + React/Next.js tetap menjadi fondasi yang kokoh, sementara kemampuan mengintegrasikan AI Agent menjadi akselerator nilai tambah yang sangat dicari industri.',
     createdAt: new Date(Date.now() - 3600000 * 3).toISOString(),
-    likes: 19,
-    likedByUserIds: ['user-budi'],
+    likes: 18,
+    likedByUserIds: [ADMIN_USER.id],
   },
   {
-    id: 'comment-dimas-poll',
-    postId: 'post-1',
+    id: 'comment-admin-prod',
+    postId: 'post-3',
     parentId: null,
-    authorId: 'user-dimas',
-    authorName: 'Dimas Ardiansyah',
-    authorAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=dimas_ardiansyah&backgroundColor=ffd5dc,b6e3f4',
-    authorRole: 'member',
-    authorBadges: ['Kreator Visual'],
-    content: `Saya memilih TypeScript & React/Next.js karena ekosistemnya matang dan kebutuhan industri untuk frontend interaktif tetap sangat tinggi!`,
-    createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-    likes: 11,
-    likedByUserIds: ['user-budi'],
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
+    authorRole: 'admin',
+    authorBadges: ['Founder Mentarimuda'],
+    content: 'Kuncinya adalah jangan menunggu produk sempurna. Rilis versi minimal, mintalah masukan komunitas, dan iterasi secara bertahap.',
+    createdAt: new Date(Date.now() - 3600000 * 18).toISOString(),
+    likes: 12,
+    likedByUserIds: [],
+  },
+  {
+    id: 'comment-guest-wfa',
+    postId: 'post-4',
+    parentId: null,
+    authorId: 'user-guest',
+    authorName: 'Tamu Mentari',
+    authorAvatar: GUEST_USER.avatar,
+    authorRole: 'guest',
+    authorBadges: ['Pengunjung Kasual'],
+    content: 'Saya vote 100% Remote! Sangat menghemat waktu perjalanan dan energi untuk berkarya.',
+    createdAt: new Date(Date.now() - 3600000 * 25).toISOString(),
+    likes: 6,
+    likedByUserIds: [],
+  },
+  {
+    id: 'comment-admin-clay',
+    postId: 'post-5',
+    parentId: null,
+    authorId: ADMIN_USER.id,
+    authorName: ADMIN_USER.displayName,
+    authorAvatar: ADMIN_USER.avatar,
+    authorRole: 'admin',
+    authorBadges: ['Founder Mentarimuda'],
+    content: 'Gunakan will-change: transform pada animasi dan hindari blur radius di atas 24px agar kartu clay tetap mulus di perangkat mobile.',
+    createdAt: new Date(Date.now() - 3600000 * 40).toISOString(),
+    likes: 15,
+    likedByUserIds: [],
   },
 ];
 
@@ -394,7 +359,7 @@ const SEED_ANNOUNCEMENTS: Announcement[] = [
   {
     id: 'ann-1',
     title: 'Selamat Datang di Mentarimuda! Ruang Kolaborasi & Diskusi Pemuda',
-    content: 'Jadikan forum ini wadah bertukar ilmu yang sehat, saling menyemangati, dan menemukan peluang kolaborasi. Nikmati fitur Polling, Q&A dengan solusi terverifikasi, dan dashboard analitik real-time!',
+    content: 'Forum resmi Mentarimuda dikelola oleh Administrator Naufal Muhammad Al Hikam. Nikmati fitur Polling, Q&A dengan solusi terverifikasi, dan dashboard analitik real-time!',
     type: 'success',
     active: true,
     createdAt: new Date(Date.now() - 3600000 * 72).toISOString(),
@@ -405,9 +370,9 @@ const SEED_ANNOUNCEMENTS: Announcement[] = [
 const SEED_ACTIVITIES: ActivityEvent[] = [
   {
     id: 'act-1',
-    actionText: 'memberikan vote pada Polling',
-    userName: 'Budi Santoso',
-    userAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=budi_santoso&backgroundColor=b6e3f4,c0aede',
+    actionText: 'menerbitkan polling interaktif',
+    userName: ADMIN_USER.displayName,
+    userAvatar: ADMIN_USER.avatar,
     targetTitle: 'Stack Web Paling Menjanjikan 2026',
     targetSlug: 'polling-stack-web-dan-bahasa-paling-menjanjikan-2026',
     type: 'vote',
@@ -415,9 +380,9 @@ const SEED_ACTIVITIES: ActivityEvent[] = [
   },
   {
     id: 'act-2',
-    actionText: 'menjawab pertanyaan dengan solusi terverifikasi pada',
-    userName: 'Siti Rahmawati',
-    userAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=siti_rahmawati&backgroundColor=d1d4f9,ffdfbf',
+    actionText: 'memberikan solusi terverifikasi pada',
+    userName: ADMIN_USER.displayName,
+    userAvatar: ADMIN_USER.avatar,
     targetTitle: 'Menyusun CV ATS-friendly untuk Beasiswa LPDP',
     targetSlug: 'bagaimana-cara-menyusun-cv-ats-friendly-untuk-beasiswa-lpdp',
     type: 'solve',
@@ -425,23 +390,13 @@ const SEED_ACTIVITIES: ActivityEvent[] = [
   },
   {
     id: 'act-3',
-    actionText: 'membuat topik diskusi baru',
-    userName: 'Karisma Mentari',
-    userAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=karisma_mentari&backgroundColor=ffd5dc,d1d4f9,c0aede',
+    actionText: 'memulai diskusi baru',
+    userName: ADMIN_USER.displayName,
+    userAvatar: ADMIN_USER.avatar,
     targetTitle: 'Membangun Side-Income dari Produk Digital',
     targetSlug: 'membangun-side-income-dari-produk-digital-tanpa-burnout',
     type: 'post',
     timestamp: new Date(Date.now() - 3600000 * 3).toISOString(),
-  },
-  {
-    id: 'act-4',
-    actionText: 'mengomentari topik',
-    userName: 'Dimas Ardiansyah',
-    userAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=dimas_ardiansyah&backgroundColor=ffd5dc,b6e3f4',
-    targetTitle: 'Stack Web Paling Menjanjikan 2026',
-    targetSlug: 'polling-stack-web-dan-bahasa-paling-menjanjikan-2026',
-    type: 'comment',
-    timestamp: new Date(Date.now() - 3600000 * 4).toISOString(),
   },
 ];
 
@@ -449,38 +404,26 @@ const SEED_ACTIVITIES: ActivityEvent[] = [
 const SEED_NOTIFICATIONS: PushNotification[] = [
   {
     id: 'notif-1',
-    recipientId: 'user-dimas',
-    senderName: 'Siti Rahmawati',
-    senderAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=siti_rahmawati&backgroundColor=d1d4f9,ffdfbf',
+    recipientId: ADMIN_USER.id,
+    senderName: 'Tamu Mentari',
+    senderAvatar: GUEST_USER.avatar,
     type: 'comment',
-    title: 'Jawaban Baru di Pertanyaan Anda',
-    message: 'Siti Rahmawati memberikan panduan lengkap mengenai CV ATS-friendly.',
+    title: 'Tanggapan Baru di Topik Anda',
+    message: 'Tamu Mentari memberikan komentar apresiasi pada panduan CV ATS.',
     targetSlug: 'bagaimana-cara-menyusun-cv-ats-friendly-untuk-beasiswa-lpdp',
-    createdAt: new Date(Date.now() - 3600000 * 11).toISOString(),
+    createdAt: new Date(Date.now() - 3600000 * 9).toISOString(),
     read: false,
   },
   {
     id: 'notif-2',
-    recipientId: 'user-siti',
-    senderName: 'Dimas Ardiansyah',
-    senderAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=dimas_ardiansyah&backgroundColor=ffd5dc,b6e3f4',
-    type: 'best_answer',
-    title: 'Solusi Diterima!',
-    message: 'Jawaban Anda ditandai sebagai Jawaban Terbaik oleh penanya. Anda mendapatkan +50 Poin Mentari!',
-    targetSlug: 'bagaimana-cara-menyusun-cv-ats-friendly-untuk-beasiswa-lpdp',
-    createdAt: new Date(Date.now() - 3600000 * 10).toISOString(),
-    read: false,
-  },
-  {
-    id: 'notif-3',
-    recipientId: 'user-budi',
-    senderName: 'Karisma Mentari',
-    senderAvatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=karisma_mentari&backgroundColor=ffd5dc,d1d4f9,c0aede',
-    type: 'poll_vote',
-    title: 'Voting Baru di Polling Anda',
-    message: 'Karisma Mentari memberikan suara pada opsi Python + AI Agents.',
-    targetSlug: 'polling-stack-web-dan-bahasa-paling-menjanjikan-2026',
-    createdAt: new Date(Date.now() - 3600000 * 3).toISOString(),
+    recipientId: ADMIN_USER.id,
+    senderName: 'Sistem Mentarimuda',
+    senderAvatar: ADMIN_USER.avatar,
+    type: 'announcement',
+    title: 'Dashboard Admin Siap Digunakan',
+    message: 'Anda login sebagai Admin Utama (Naufal Muhammad Al Hikam) dengan hak akses penuh.',
+    targetSlug: 'admin',
+    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
     read: true,
   },
 ];
@@ -510,6 +453,7 @@ export const storageService = {
   // Initialization
   init(): void {
     if (typeof window === 'undefined') return;
+
     if (!localStorage.getItem(STORAGE_KEYS.POSTS)) {
       localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(SEED_POSTS));
     }
@@ -523,8 +467,8 @@ export const storageService = {
       localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(SEED_USERS));
     }
     if (!localStorage.getItem(STORAGE_KEYS.CURRENT_USER_ID)) {
-      // Default to Dimas or Admin for an active experience
-      localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, 'user-dimas');
+      // Default to the Admin user (Naufal Muhammad Al Hikam)
+      localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, ADMIN_USER.id);
     }
     if (!localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS)) {
       localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(SEED_NOTIFICATIONS));
@@ -537,7 +481,7 @@ export const storageService = {
     }
   },
 
-  // USERS
+  // USERS & AUTHENTICATION
   getUsers(): User[] {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.USERS);
@@ -549,10 +493,10 @@ export const storageService = {
 
   getCurrentUser(): User {
     const users = this.getUsers();
-    const currentId = localStorage.getItem(STORAGE_KEYS.CURRENT_USER_ID) || 'user-dimas';
+    const currentId = localStorage.getItem(STORAGE_KEYS.CURRENT_USER_ID) || ADMIN_USER.id;
     const found = users.find(u => u.id === currentId);
     if (found) return found;
-    return users[0] || SEED_USERS[0];
+    return users.find(u => u.role === 'admin') || ADMIN_USER;
   },
 
   setCurrentUser(userId: string): void {
@@ -560,14 +504,72 @@ export const storageService = {
     notifyStateChange('user_switched', userId);
   },
 
-  createUser(userData: Partial<User>): User {
+  // Login verification logic
+  login(username: string, password?: string): { success: boolean; user?: User; error?: string } {
+    const users = this.getUsers();
+    const cleanUsername = username.trim().toLowerCase();
+
+    // 1. Admin Login check
+    if (cleanUsername === ADMIN_USER.username.toLowerCase()) {
+      if (password === ADMIN_USER.password) {
+        this.setCurrentUser(ADMIN_USER.id);
+        return { success: true, user: ADMIN_USER };
+      } else {
+        return { success: false, error: 'Password Admin salah! Silakan masukkan password yang valid.' };
+      }
+    }
+
+    // 2. Member Login check
+    const member = users.find(u => u.username.toLowerCase() === cleanUsername);
+    if (member) {
+      if (member.isBanned) {
+        return { success: false, error: 'Akun ini telah dinonaktifkan oleh administrator.' };
+      }
+      if (member.password && member.password !== password) {
+        return { success: false, error: 'Password salah untuk akun member ini.' };
+      }
+      this.setCurrentUser(member.id);
+      return { success: true, user: member };
+    }
+
+    return { success: false, error: 'Username tidak ditemukan. Buat akun baru atau gunakan mode tamu.' };
+  },
+
+  // Switch to Guest mode
+  setGuestMode(guestDisplayName?: string): User {
+    const users = this.getUsers();
+    let guestUser = users.find(u => u.role === 'guest');
+
+    if (guestUser) {
+      if (guestDisplayName && guestDisplayName.trim()) {
+        guestUser.displayName = guestDisplayName.trim();
+        guestUser.avatar = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(guestDisplayName)}&backgroundColor=e2e8f0`;
+        localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+      }
+      this.setCurrentUser(guestUser.id);
+      return guestUser;
+    }
+
+    guestUser = {
+      ...GUEST_USER,
+      displayName: guestDisplayName?.trim() || 'Tamu Mentari',
+    };
+    users.push(guestUser);
+    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+    this.setCurrentUser(guestUser.id);
+    return guestUser;
+  },
+
+  // Register New Member
+  createUser(userData: Partial<User> & { password?: string }): User {
     const users = this.getUsers();
     const newUser: User = {
       id: `user-${Date.now()}`,
-      username: userData.username || `user_${Date.now().toString().slice(-4)}`,
+      username: userData.username || `member_${Date.now().toString().slice(-4)}`,
       displayName: userData.displayName || 'Anggota Mentari',
       email: userData.email || `${userData.username}@mentari.id`,
-      role: userData.role || 'member',
+      password: userData.password || '',
+      role: 'member', // Default user registered is member
       avatar: userData.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${userData.username || Date.now()}&backgroundColor=b6e3f4,ffd5dc`,
       bio: userData.bio || 'Semangat belajar dan bertukar wawasan di Mentarimuda.',
       location: userData.location || 'Indonesia',
@@ -603,7 +605,7 @@ export const storageService = {
   toggleBanUser(userId: string): boolean {
     const users = this.getUsers();
     const user = users.find(u => u.id === userId);
-    if (!user) return false;
+    if (!user || user.role === 'admin') return false; // Cannot ban admin
 
     user.isBanned = !user.isBanned;
     localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
@@ -614,14 +616,11 @@ export const storageService = {
   changeUserRole(userId: string, newRole: UserRole): void {
     const users = this.getUsers();
     const user = users.find(u => u.id === userId);
-    if (!user) return;
+    if (!user || user.id === ADMIN_USER.id) return; // Keep main admin protected
 
     user.role = newRole;
     if (newRole === 'moderator' && !user.badges.includes('Moderator')) {
       user.badges.push('Moderator');
-    }
-    if (newRole === 'admin' && !user.badges.includes('Admin Komunitas')) {
-      user.badges.push('Admin Komunitas');
     }
     localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
     notifyStateChange('user_role_changed', user);
@@ -631,7 +630,14 @@ export const storageService = {
   getCategories(): Category[] {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
-      return data ? JSON.parse(data) : SEED_CATEGORIES;
+      const rawCategories: Category[] = data ? JSON.parse(data) : SEED_CATEGORIES;
+      const posts = this.getPosts();
+      
+      // Calculate real, accurate threadCount for each category based on actual posts
+      return rawCategories.map(cat => ({
+        ...cat,
+        threadCount: posts.filter(p => p.categorySlug === cat.slug).length,
+      }));
     } catch {
       return SEED_CATEGORIES;
     }
@@ -933,10 +939,10 @@ export const storageService = {
       );
     }
 
-    // Increment user answer/comment count
+    // Increment user answer/comment count if not guest
     const users = this.getUsers();
     const author = users.find(u => u.id === commentData.authorId);
-    if (author) {
+    if (author && author.role !== 'guest') {
       author.answerCount = (author.answerCount || 0) + 1;
       author.karma = (author.karma || 0) + 5;
       localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
@@ -992,7 +998,7 @@ export const storageService = {
     // Award bonus karma to solution author
     const users = this.getUsers();
     const solutionAuthor = users.find(u => u.id === targetComment.authorId);
-    if (solutionAuthor) {
+    if (solutionAuthor && solutionAuthor.role !== 'guest') {
       solutionAuthor.solutionsCount = (solutionAuthor.solutionsCount || 0) + 1;
       solutionAuthor.karma = (solutionAuthor.karma || 0) + 50;
       if (!solutionAuthor.badges.includes('Pemberi Solusi')) {
@@ -1188,7 +1194,6 @@ export const storageService = {
     const solvedQuestions = questions.filter(p => p.isSolved);
     const solvedRate = questions.length > 0 ? Math.round((solvedQuestions.length / questions.length) * 100) : 100;
 
-    // Simulated weekly distribution based on real counts
     const days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
     const weeklyActivity = days.map((day, idx) => ({
       day,
@@ -1252,7 +1257,7 @@ export const storageService = {
     localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(SEED_CATEGORIES));
     localStorage.setItem(STORAGE_KEYS.COMMENTS, JSON.stringify(SEED_COMMENTS));
     localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(SEED_USERS));
-    localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, 'user-dimas');
+    localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, ADMIN_USER.id);
     localStorage.setItem(STORAGE_KEYS.ANNOUNCEMENTS, JSON.stringify(SEED_ANNOUNCEMENTS));
     localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(SEED_NOTIFICATIONS));
     localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_ACTIVITIES));
@@ -1261,29 +1266,29 @@ export const storageService = {
 
   // SIMULATOR FOR REAL-TIME PUSH NOTIFICATION DEMO
   simulateRandomInteraction(): PushNotification {
-    const users = this.getUsers();
     const posts = this.getPosts();
     const currentUser = this.getCurrentUser();
 
-    const otherUsers = users.filter(u => u.id !== currentUser.id && u.role !== 'guest');
-    const randomActor = otherUsers[Math.floor(Math.random() * otherUsers.length)] || users[0];
     const randomPost = posts[Math.floor(Math.random() * posts.length)] || posts[0];
 
-    const interactionTypes: { type: PushNotification['type']; title: string; message: string }[] = [
+    const interactionTypes: { type: PushNotification['type']; title: string; message: string; senderName: string }[] = [
       {
         type: 'comment',
+        senderName: 'Tamu Mentari #204',
         title: 'Komentar Baru Diterima!',
-        message: `${randomActor.displayName} memberikan opini menarik pada "${randomPost.title.slice(0, 35)}..."`,
+        message: `Tamu Mentari #204 memberikan tanggapan menarik pada "${randomPost.title.slice(0, 35)}..."`,
       },
       {
         type: 'upvote',
+        senderName: 'Anggota Komunitas',
         title: 'Apresiasi Topik Komunitas',
-        message: `${randomActor.displayName} baru saja memberikan upvote pada postingan Anda!`,
+        message: `Seorang anggota baru saja memberikan upvote pada topik "${randomPost.title.slice(0, 30)}..."!`,
       },
       {
         type: 'poll_vote',
+        senderName: 'Pemuda Pemilih',
         title: 'Suara Baru Masuk ke Polling',
-        message: `${randomActor.displayName} ikut memberikan suara pada topik hangat "${randomPost.title.slice(0, 30)}..."`,
+        message: `Partisipan baru ikut memberikan suara pada topik hangat "${randomPost.title.slice(0, 30)}..."`,
       },
     ];
 
@@ -1291,8 +1296,8 @@ export const storageService = {
 
     const notif = this.createNotification({
       recipientId: currentUser.id,
-      senderName: randomActor.displayName,
-      senderAvatar: randomActor.avatar,
+      senderName: pick.senderName,
+      senderAvatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(pick.senderName)}&backgroundColor=e2e8f0,b6e3f4`,
       type: pick.type,
       title: pick.title,
       message: pick.message,
@@ -1301,8 +1306,8 @@ export const storageService = {
 
     this.logActivity(
       pick.type === 'comment' ? 'menambahkan komentar pada' : pick.type === 'poll_vote' ? 'memilih opsi polling pada' : 'menyukai postingan',
-      randomActor.displayName,
-      randomActor.avatar,
+      pick.senderName,
+      `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(pick.senderName)}&backgroundColor=e2e8f0,b6e3f4`,
       randomPost.title,
       randomPost.slug,
       pick.type === 'comment' ? 'comment' : pick.type === 'poll_vote' ? 'vote' : 'post'

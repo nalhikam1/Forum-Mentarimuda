@@ -154,76 +154,86 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
           ) : (
-            <div className="clay-card p-6 md:p-8 bg-gradient-to-r from-amber-50/70 via-white to-orange-50/40 border-2 border-white shadow-xl relative overflow-hidden">
+            <div className="clay-card p-6 md:p-7 bg-gradient-to-r from-amber-50/70 via-white to-orange-50/40 border-2 border-white shadow-xl relative overflow-hidden">
               <div className="relative z-10 max-w-xl">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-extrabold text-amber-600 uppercase tracking-widest">
-                    Komunitas Mentarimuda
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-[11px] font-extrabold text-amber-600 uppercase tracking-widest">
+                    Komunitas Pemuda
                   </span>
                 </div>
-                <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                  Ruang Bertumbuh, Berbagi Solusi, dan Berkolaborasi Pemuda Indonesia.
+                <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                  Forum MentariMuda
                 </h1>
-                <p className="text-xs md:text-sm text-slate-600 mt-2.5 leading-relaxed">
-                  Diskusikan teknologi masa depan, peluang beasiswa, validasi startup, hingga polling interaktif dengan desain kotak-kotak clay yang ramah dan menyenangkan.
+                <p className="text-xs md:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                  Ruang diskusi teknologi, karir, startup, dan kolaborasi ide inspiratif generasi muda.
                 </p>
 
-                <div className="mt-5 flex items-center gap-3 flex-wrap">
+                <div className="mt-4 flex items-center gap-2.5 flex-wrap">
                   <button
                     onClick={() => onNavigate('buat-topik')}
-                    className="clay-btn-primary px-5 py-2.5 text-xs md:text-sm font-bold flex items-center gap-2"
+                    className="clay-btn-primary px-4 py-2 text-xs font-bold flex items-center gap-1.5"
                   >
-                    <span>Mulai Diskusi Baru</span>
+                    <span>+ Buat Topik Baru</span>
                   </button>
-                  <button
-                    onClick={() => onNavigate('analitik')}
-                    className="clay-btn-secondary px-4 py-2.5 text-xs md:text-sm font-semibold flex items-center gap-1.5 text-slate-700"
-                  >
-                    <TrendingUp className="w-4 h-4 text-amber-500" />
-                    <span>Lihat Statistik Komunitas</span>
-                  </button>
+                  {storageService.getCurrentUser().role === 'admin' ? (
+                    <button
+                      onClick={() => onNavigate('analitik')}
+                      className="clay-btn-secondary px-3.5 py-2 text-xs font-semibold flex items-center gap-1.5 text-purple-700 border-purple-200"
+                    >
+                      <TrendingUp className="w-3.5 h-3.5 text-purple-600" />
+                      <span>Analitik (Admin)</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => onNavigate('kategori')}
+                      className="clay-btn-secondary px-3.5 py-2 text-xs font-semibold flex items-center gap-1.5 text-slate-700"
+                    >
+                      <Compass className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>Jelajah Kategori</span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
           )}
 
-          {/* Interactive Filter Tabs / Segmented Controls */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+          {/* Interactive Filter Tabs */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
             <button
               onClick={() => setActiveTab('all')}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${
                 activeTab === 'all'
                   ? 'clay-btn-primary shadow-sm'
                   : 'clay-btn-secondary text-slate-600 hover:text-slate-900'
               }`}
             >
-              Semua Topik
+              Semua
             </button>
             <button
-              onClick={() => setActiveTab('trending')}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5 ${
-                activeTab === 'trending'
+              onClick={() => setActiveTab('diskusi')}
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                activeTab === 'diskusi'
                   ? 'clay-btn-primary shadow-sm'
                   : 'clay-btn-secondary text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Flame className="w-3.5 h-3.5 text-orange-500" />
-              <span>Terhangat</span>
+              <MessageSquare className="w-3.5 h-3.5 text-amber-500" />
+              <span>Diskusi</span>
             </button>
             <button
               onClick={() => setActiveTab('pertanyaan')}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5 ${
                 activeTab === 'pertanyaan'
                   ? 'clay-btn-primary shadow-sm'
                   : 'clay-btn-secondary text-slate-600 hover:text-slate-900'
               }`}
             >
               <HelpCircle className="w-3.5 h-3.5 text-sky-500" />
-              <span>Tanya Jawab</span>
+              <span>Q&A</span>
             </button>
             <button
               onClick={() => setActiveTab('polling')}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5 ${
                 activeTab === 'polling'
                   ? 'clay-btn-primary shadow-sm'
                   : 'clay-btn-secondary text-slate-600 hover:text-slate-900'
@@ -233,15 +243,15 @@ export const HomePage: React.FC<HomePageProps> = ({
               <span>Polling</span>
             </button>
             <button
-              onClick={() => setActiveTab('unsolved')}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5 ${
-                activeTab === 'unsolved'
+              onClick={() => setActiveTab('trending')}
+              className={`px-3 py-1.5 text-xs font-bold rounded-xl whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                activeTab === 'trending'
                   ? 'clay-btn-primary shadow-sm'
                   : 'clay-btn-secondary text-slate-600 hover:text-slate-900'
               }`}
             >
-              <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
-              <span>Belum Terjawab</span>
+              <Flame className="w-3.5 h-3.5 text-orange-500" />
+              <span>Terhangat</span>
             </button>
           </div>
 
