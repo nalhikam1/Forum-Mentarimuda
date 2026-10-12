@@ -11,14 +11,14 @@ import {
 } from '../types/forum';
 
 const STORAGE_KEYS = {
-  POSTS: 'mentarimuda_posts_v3',
-  CATEGORIES: 'mentarimuda_categories_v3',
-  COMMENTS: 'mentarimuda_comments_v3',
-  USERS: 'mentarimuda_users_v3',
-  CURRENT_USER_ID: 'mentarimuda_current_user_id_v3',
-  NOTIFICATIONS: 'mentarimuda_notifications_v3',
-  ANNOUNCEMENTS: 'mentarimuda_announcements_v3',
-  ACTIVITIES: 'mentarimuda_activities_v3',
+  POSTS: 'mentarimuda_posts_v4',
+  CATEGORIES: 'mentarimuda_categories_v4',
+  COMMENTS: 'mentarimuda_comments_v4',
+  USERS: 'mentarimuda_users_v4',
+  CURRENT_USER_ID: 'mentarimuda_current_user_id_v4',
+  NOTIFICATIONS: 'mentarimuda_notifications_v4',
+  ANNOUNCEMENTS: 'mentarimuda_announcements_v4',
+  ACTIVITIES: 'mentarimuda_activities_v4',
 };
 
 // Seed Categories
@@ -467,8 +467,8 @@ export const storageService = {
       localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(SEED_USERS));
     }
     if (!localStorage.getItem(STORAGE_KEYS.CURRENT_USER_ID)) {
-      // Default to the Admin user (Naufal Muhammad Al Hikam)
-      localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, ADMIN_USER.id);
+      // Default to Guest user (Tamu / No Login)
+      localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, GUEST_USER.id);
     }
     if (!localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS)) {
       localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(SEED_NOTIFICATIONS));
@@ -493,10 +493,10 @@ export const storageService = {
 
   getCurrentUser(): User {
     const users = this.getUsers();
-    const currentId = localStorage.getItem(STORAGE_KEYS.CURRENT_USER_ID) || ADMIN_USER.id;
+    const currentId = localStorage.getItem(STORAGE_KEYS.CURRENT_USER_ID) || GUEST_USER.id;
     const found = users.find(u => u.id === currentId);
     if (found) return found;
-    return users.find(u => u.role === 'admin') || ADMIN_USER;
+    return users.find(u => u.role === 'guest') || GUEST_USER;
   },
 
   setCurrentUser(userId: string): void {
@@ -1257,7 +1257,7 @@ export const storageService = {
     localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(SEED_CATEGORIES));
     localStorage.setItem(STORAGE_KEYS.COMMENTS, JSON.stringify(SEED_COMMENTS));
     localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(SEED_USERS));
-    localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, ADMIN_USER.id);
+    localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, GUEST_USER.id);
     localStorage.setItem(STORAGE_KEYS.ANNOUNCEMENTS, JSON.stringify(SEED_ANNOUNCEMENTS));
     localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(SEED_NOTIFICATIONS));
     localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_ACTIVITIES));

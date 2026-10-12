@@ -175,28 +175,44 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             {/* User Identity Capsule with Clear Role Separation */}
-            <div
-              onClick={onOpenAuth}
-              className="flex items-center gap-2 p-1.5 pr-2.5 rounded-2xl bg-white border border-slate-200 shadow-xs cursor-pointer hover:border-amber-400 transition-colors"
-              title={`Login sebagai: ${currentUser.displayName} (${currentUser.role}). Klik untuk ganti.`}
-            >
-              <img
-                src={currentUser.avatar}
-                alt={currentUser.displayName}
-                referrerPolicy="no-referrer"
-                className="w-7 h-7 rounded-xl bg-amber-50 object-cover shadow-2xs"
-              />
-              <div className="hidden sm:block text-left leading-none max-w-[110px]">
-                <span className="text-xs font-bold text-slate-800 block truncate">
-                  {currentUser.displayName}
-                </span>
-                <span className={`text-[10px] font-bold ${
-                  isAdmin ? 'text-rose-600' : currentUser.role === 'member' ? 'text-emerald-600' : 'text-slate-400'
-                }`}>
-                  {isAdmin ? 'Admin' : currentUser.role === 'member' ? 'Member' : 'Tamu'}
-                </span>
+            {currentUser.role === 'guest' ? (
+              <button
+                onClick={onOpenAuth}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-amber-400 hover:bg-amber-50/50 transition-colors"
+                title="Status Tamu (Belum Login). Klik untuk Masuk atau Daftar."
+              >
+                <div className="w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+                  <UserIcon className="w-3.5 h-3.5" />
+                </div>
+                <div className="text-left leading-none">
+                  <span className="text-xs font-bold text-slate-700 block">Tamu</span>
+                  <span className="text-[10px] text-amber-600 font-semibold">Masuk / Daftar</span>
+                </div>
+              </button>
+            ) : (
+              <div
+                onClick={onOpenAuth}
+                className="flex items-center gap-2 p-1.5 pr-2.5 rounded-2xl bg-white border border-slate-200 shadow-xs cursor-pointer hover:border-amber-400 transition-colors"
+                title={`Login sebagai: ${currentUser.displayName} (${currentUser.role}). Klik untuk ganti akun.`}
+              >
+                <img
+                  src={currentUser.avatar}
+                  alt={currentUser.displayName}
+                  referrerPolicy="no-referrer"
+                  className="w-7 h-7 rounded-xl bg-amber-50 object-cover shadow-2xs"
+                />
+                <div className="hidden sm:block text-left leading-none max-w-[110px]">
+                  <span className="text-xs font-bold text-slate-800 block truncate">
+                    {currentUser.displayName}
+                  </span>
+                  <span className={`text-[10px] font-bold ${
+                    isAdmin ? 'text-rose-600' : 'text-emerald-600'
+                  }`}>
+                    {isAdmin ? 'Admin' : 'Member'}
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Primary Action Button: Buat Topik */}
             <button
