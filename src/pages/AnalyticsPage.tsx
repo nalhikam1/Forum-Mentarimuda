@@ -15,7 +15,8 @@ import {
   Radio,
   Zap,
   BarChart3,
-  ShieldCheck
+  ShieldCheck,
+  LogIn
 } from 'lucide-react';
 
 interface AnalyticsPageProps {
@@ -64,18 +65,24 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
   }).sort((a, b) => b.count - a.count);
 
   const currentUser = storageService.getCurrentUser();
-  const [adminPasswordInput, setAdminPasswordInput] = useState('');
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
   const [adminAuthError, setAdminAuthError] = useState('');
 
   const handleAdminVerify = (e: React.FormEvent) => {
     e.preventDefault();
     setAdminAuthError('');
-    const res = storageService.login('naufalmuhammadalhikam', adminPasswordInput);
+    const res = storageService.login(loginUsername, loginPassword);
     if (res.success) {
-      setAdminPasswordInput('');
+      if (res.user?.role !== 'admin') {
+        setAdminAuthError('Akun ini tidak memiliki akses administrator.');
+        return;
+      }
+      setLoginUsername('');
+      setLoginPassword('');
       loadData();
     } else {
-      setAdminAuthError(res.error || 'Password Admin salah!');
+      setAdminAuthError(res.error || 'Username atau password salah.');
     }
   };
 
@@ -86,9 +93,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
           <div className="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-600 mx-auto flex items-center justify-center mb-4 clay-inset">
             <BarChart3 className="w-7 h-7 text-purple-600" />
           </div>
-          <h2 className="text-xl font-bold text-slate-900">Analitik Khusus Administrator</h2>
+          <h2 className="text-xl font-bold text-slate-900">Login Administrator</h2>
           <p className="text-xs text-slate-500 mt-1.5 mb-5 leading-relaxed">
-            Dashboard analitik aktivitas dan monitoring metrik real-time dibatasi khusus untuk Administrator <b>(naufalmuhammadalhikam)</b>.
+            Silakan masukkan username dan password untuk melihat analitik forum.
           </p>
 
           <form onSubmit={handleAdminVerify} className="space-y-3.5 text-left">
@@ -100,14 +107,31 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
 
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Password Administrator
+                Username
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-2.5 text-slate-400 text-xs">@</span>
+                <input
+                  type="text"
+                  required
+                  value={loginUsername}
+                  onChange={(e) => setLoginUsername(e.target.value)}
+                  placeholder="username kamu"
+                  className="w-full pl-7 pr-3 py-2.5 rounded-xl border border-slate-200 clay-inset text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-400 font-medium"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                Password
               </label>
               <input
                 type="password"
                 required
-                value={adminPasswordInput}
-                onChange={(e) => setAdminPasswordInput(e.target.value)}
-                placeholder="Masukkan kata sandi admin..."
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                placeholder="password kamu"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 clay-inset text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-400 font-medium"
               />
             </div>
@@ -116,24 +140,17 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
               type="submit"
               className="clay-btn-primary w-full py-2.5 text-xs md:text-sm font-bold flex items-center justify-center gap-2"
             >
-              <ShieldCheck className="w-4 h-4" />
-              <span>Verifikasi & Lihat Analitik</span>
+              <LogIn className="w-4 h-4" />
+              <span>Masuk</span>
             </button>
           </form>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-center text-xs">
             <button
               onClick={() => onNavigate('')}
-              className="text-slate-400 hover:text-slate-700"
+              className="text-slate-400 hover:text-slate-700 font-medium"
             >
               Kembali ke Forum
-            </button>
-            <button
-              type="button"
-              onClick={() => setAdminPasswordInput('Sowx3n713204***')}
-              className="text-purple-600 font-semibold hover:underline"
-            >
-              Isi Password Demo
             </button>
           </div>
         </div>

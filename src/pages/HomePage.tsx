@@ -181,7 +181,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                       className="clay-btn-secondary px-3.5 py-2 text-xs font-semibold flex items-center gap-1.5 text-purple-700 border-purple-200"
                     >
                       <TrendingUp className="w-3.5 h-3.5 text-purple-600" />
-                      <span>Analitik (Admin)</span>
+                      <span>Analitik</span>
                     </button>
                   ) : (
                     <button

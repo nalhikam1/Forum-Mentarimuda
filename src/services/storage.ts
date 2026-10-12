@@ -11,14 +11,14 @@ import {
 } from '../types/forum';
 
 const STORAGE_KEYS = {
-  POSTS: 'mentarimuda_posts_v4',
-  CATEGORIES: 'mentarimuda_categories_v4',
-  COMMENTS: 'mentarimuda_comments_v4',
-  USERS: 'mentarimuda_users_v4',
-  CURRENT_USER_ID: 'mentarimuda_current_user_id_v4',
-  NOTIFICATIONS: 'mentarimuda_notifications_v4',
-  ANNOUNCEMENTS: 'mentarimuda_announcements_v4',
-  ACTIVITIES: 'mentarimuda_activities_v4',
+  POSTS: 'mentarimuda_posts_v5',
+  CATEGORIES: 'mentarimuda_categories_v5',
+  COMMENTS: 'mentarimuda_comments_v5',
+  USERS: 'mentarimuda_users_v5',
+  CURRENT_USER_ID: 'mentarimuda_current_user_id_v5',
+  NOTIFICATIONS: 'mentarimuda_notifications_v5',
+  ANNOUNCEMENTS: 'mentarimuda_announcements_v5',
+  ACTIVITIES: 'mentarimuda_activities_v5',
 };
 
 // Seed Categories
@@ -466,8 +466,9 @@ export const storageService = {
     if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
       localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(SEED_USERS));
     }
-    if (!localStorage.getItem(STORAGE_KEYS.CURRENT_USER_ID)) {
-      // Default to Guest user (Tamu / No Login)
+    // Default user is ALWAYS Guest (Tamu / No Login) by default
+    const storedUserId = localStorage.getItem(STORAGE_KEYS.CURRENT_USER_ID);
+    if (!storedUserId || storedUserId === ADMIN_USER.id) {
       localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, GUEST_USER.id);
     }
     if (!localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS)) {
@@ -502,6 +503,11 @@ export const storageService = {
   setCurrentUser(userId: string): void {
     localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, userId);
     notifyStateChange('user_switched', userId);
+  },
+
+  logout(): void {
+    this.setCurrentUser(GUEST_USER.id);
+    notifyStateChange('user_switched', GUEST_USER.id);
   },
 
   // Login verification logic

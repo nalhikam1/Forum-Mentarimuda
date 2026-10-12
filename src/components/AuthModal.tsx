@@ -50,14 +50,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       setLoginPassword('');
       onClose();
     } else {
-      setLoginError(res.error || 'Login gagal.');
+      setLoginError(res.error || 'Login gagal. Periksa kembali username dan password.');
     }
-  };
-
-  const handleAdminQuickFill = () => {
-    setLoginUsername('naufalmuhammadalhikam');
-    setLoginPassword('Sowx3n713204***');
-    setLoginError('');
   };
 
   const handleRegisterSubmit = (e: React.FormEvent) => {
@@ -87,7 +81,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleLogout = () => {
-    storageService.setGuestMode('Tamu Mentari');
+    storageService.logout();
     onClose();
   };
 
@@ -104,9 +98,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <KeyRound className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 text-lg leading-tight">Autentikasi Mentarimuda</h3>
+              <h3 className="font-bold text-slate-800 text-lg leading-tight">Akun Mentarimuda</h3>
               <p className="text-xs text-slate-500">
-                Status saat ini: <b className="text-slate-800">{currentUser.displayName}</b> ({currentUser.role})
+                {currentUser.role === 'guest' ? 'Mode Tamu (Belum Login)' : `Masuk sebagai: ${currentUser.displayName}`}
               </p>
             </div>
           </div>
@@ -158,21 +152,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* TAB 1: LOGIN */}
         {activeTab === 'login' && (
           <form onSubmit={handleLoginSubmit} className="p-5 space-y-4 max-h-[65vh] overflow-y-auto">
-            {/* Quick Fill Button for Admin */}
-            <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/70 flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-xs text-amber-900">
-                <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>Masuk sebagai Admin Utama?</span>
-              </div>
-              <button
-                type="button"
-                onClick={handleAdminQuickFill}
-                className="clay-btn-primary px-3 py-1.5 text-xs font-bold shrink-0"
-              >
-                Isi Kredensial Admin
-              </button>
-            </div>
-
             {loginError && (
               <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 font-medium flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
@@ -191,7 +170,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   required
                   value={loginUsername}
                   onChange={(e) => setLoginUsername(e.target.value)}
-                  placeholder="naufalmuhammadalhikam atau username member"
+                  placeholder="username kamu"
                   className="w-full pl-7 pr-3 py-2.5 rounded-xl border border-slate-200 clay-inset text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium"
                 />
               </div>
@@ -206,7 +185,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 required
                 value={loginPassword}
                 onChange={(e) => setLoginPassword(e.target.value)}
-                placeholder="Masukkan kata sandi..."
+                placeholder="password kamu"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 clay-inset text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium"
               />
             </div>
@@ -228,7 +207,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 className="clay-btn-primary flex-1 py-2.5 text-xs md:text-sm font-bold flex items-center justify-center gap-2"
               >
                 <LogIn className="w-4 h-4" />
-                <span>Masuk Sekarang</span>
+                <span>Masuk</span>
               </button>
             </div>
           </form>

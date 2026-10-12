@@ -148,7 +148,7 @@ export const CreatePostPage: React.FC<CreatePostPageProps> = ({
         {currentUser.role === 'guest' && (
           <div className="mt-4 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center justify-between gap-3 flex-wrap">
             <p className="text-xs text-amber-900 leading-snug">
-              Anda sedang dalam <b>Mode Tamu</b>. Postingan akan memiliki label [Tamu]. Ingin memiliki nama profil permanen atau login admin?
+              Anda sedang dalam <b>Mode Tamu</b>. Postingan akan memiliki label [Tamu]. Ingin memiliki nama profil permanen?
             </p>
             <button
               type="button"
