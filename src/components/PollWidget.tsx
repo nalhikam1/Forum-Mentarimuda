@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PollData } from '../types/forum';
-import { storageService } from '../services/storage';
+import { storageService, subscribeToStateChange } from '../services/storage';
 import { Vote, CheckCircle2, Award } from 'lucide-react';
 
 interface PollWidgetProps {
@@ -17,11 +17,32 @@ export const PollWidget: React.FC<PollWidgetProps> = ({
   compact = false,
 }) => {
   const currentUser = storageService.getCurrentUser();
+  const [currentPoll, setCurrentPoll] = useState<PollData>(pollData);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Sync with prop
+  useEffect(() => {
+    setCurrentPoll(pollData);
+  }, [pollData]);
+
+  // Real-time listener across tabs and components
+  useEffect(() => {
+    const unsub = subscribeToStateChange((event) => {
+      const { eventType, payload } = event.detail || {};
+      if (eventType === 'poll_voted' && payload?.postId === postId) {
+        const posts = storageService.getPosts();
+        const found = posts.find(p => p.id === postId);
+        if (found?.pollData) {
+          setCurrentPoll(found.pollData);
+        }
+      }
+    });
+    return () => unsub();
+  }, [postId]);
+
   // Check if current user has already voted
-  const userVotedOption = pollData.options.find(opt => 
+  const userVotedOption = currentPoll.options.find(opt => 
     opt.voterIds.includes(currentUser.id)
   );
   const hasVoted = !!userVotedOption;
@@ -31,6 +52,26 @@ export const PollWidget: React.FC<PollWidgetProps> = ({
     if (!selectedOptionId || isSubmitting) return;
 
     setIsSubmitting(true);
+
+    // 1. Instant optimistic update
+    const updatedOptions = currentPoll.options.map(opt => {
+      if (opt.id === selectedOptionId) {
+        return {
+          ...opt,
+          voteCount: opt.voteCount + 1,
+          voterIds: [...opt.voterIds, currentUser.id],
+        };
+      }
+      return opt;
+    });
+
+    setCurrentPoll({
+      ...currentPoll,
+      totalVotes: currentPoll.totalVotes + 1,
+      options: updatedOptions,
+    });
+
+    // 2. Persist to storage & trigger global real-time event
     const success = storageService.votePoll(postId, selectedOptionId, currentUser.id);
     setIsSubmitting(false);
 
@@ -39,7 +80,7 @@ export const PollWidget: React.FC<PollWidgetProps> = ({
     }
   };
 
-  const totalVotes = Math.max(1, pollData.totalVotes);
+  const totalVotes = Math.max(1, currentPoll.totalVotes);
 
   return (
     <div 
@@ -58,19 +99,19 @@ export const PollWidget: React.FC<PollWidgetProps> = ({
           </span>
         </div>
         <span className="text-xs font-semibold text-slate-500 tabular-nums">
-          {pollData.totalVotes} Total Suara
+          {currentPoll.totalVotes} Total Suara
         </span>
       </div>
 
       <h4 className="font-bold text-slate-900 text-sm md:text-base mb-3 leading-snug">
-        {pollData.question}
+        {currentPoll.question}
       </h4>
 
       {/* Options List */}
       <div className="space-y-2.5">
-        {pollData.options.map((option) => {
-          const percentage = pollData.totalVotes > 0 
-            ? Math.round((option.voteCount / pollData.totalVotes) * 100) 
+        {currentPoll.options.map((option) => {
+          const percentage = currentPoll.totalVotes > 0 
+            ? Math.round((option.voteCount / currentPoll.totalVotes) * 100) 
             : 0;
           const isSelected = selectedOptionId === option.id;
           const isUserChoice = userVotedOption?.id === option.id;

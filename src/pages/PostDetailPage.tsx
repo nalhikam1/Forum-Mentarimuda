@@ -91,8 +91,39 @@ export const PostDetailPage: React.FC<PostDetailPageProps> = ({
   const canMarkSolution = post.type === 'pertanyaan' && (isAuthor || isAdminOrMod);
 
   const handleLikePost = () => {
+    // 1. Instant optimistic update
+    const nextHasLiked = !hasLiked;
+    const nextLikes = nextHasLiked ? (post.likes || 0) + 1 : Math.max(0, (post.likes || 1) - 1);
+    const nextLikedByUserIds = nextHasLiked
+      ? [...(post.likedByUserIds || []), currentUser.id]
+      : (post.likedByUserIds || []).filter(id => id !== currentUser.id);
+
+    setPost({
+      ...post,
+      likes: nextLikes,
+      likedByUserIds: nextLikedByUserIds,
+    });
+
+    // 2. Persist to storage & trigger real-time events
     storageService.toggleLikePost(post.id, currentUser.id);
-    loadData();
+  };
+
+  const handleToggleLikeComment = (commentId: string) => {
+    // 1. Instant optimistic update on comments list
+    setComments(prev => prev.map(c => {
+      if (c.id === commentId) {
+        const cHasLiked = (c.likedByUserIds || []).includes(currentUser.id);
+        const nextLikes = cHasLiked ? Math.max(0, c.likes - 1) : c.likes + 1;
+        const nextLikedByUserIds = cHasLiked
+          ? (c.likedByUserIds || []).filter(id => id !== currentUser.id)
+          : [...(c.likedByUserIds || []), currentUser.id];
+        return { ...c, likes: nextLikes, likedByUserIds: nextLikedByUserIds };
+      }
+      return c;
+    }));
+
+    // 2. Persist to storage & trigger real-time events
+    storageService.toggleLikeComment(commentId, currentUser.id);
   };
 
   const handleShare = () => {
@@ -365,14 +396,15 @@ export const PostDetailPage: React.FC<PostDetailPageProps> = ({
           <div className="flex items-center gap-3">
             <button
               onClick={handleLikePost}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 ${
                 hasLiked
-                  ? 'clay-btn-primary shadow-sm text-white'
+                  ? 'clay-btn-primary shadow-sm text-white ring-2 ring-amber-300'
                   : 'clay-btn-secondary text-slate-700 hover:text-amber-600'
               }`}
+              title={hasLiked ? 'Batalkan suka' : 'Beri suka (apresiasi)'}
             >
-              <ThumbsUp className="w-4 h-4" />
-              <span>{post.likes} Suka</span>
+              <ThumbsUp className={`w-4 h-4 ${hasLiked ? 'fill-current text-white' : 'text-slate-500'}`} />
+              <span className="tabular-nums font-bold">{post.likes} Suka</span>
             </button>
 
             <button
@@ -564,18 +596,16 @@ export const PostDetailPage: React.FC<PostDetailPageProps> = ({
                   {/* Comment Action Footer */}
                   <div className="mt-3 pl-12 flex items-center gap-3">
                     <button
-                      onClick={() => {
-                        storageService.toggleLikeComment(comment.id, currentUser.id);
-                        loadData();
-                      }}
-                      className={`flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg transition-colors ${
+                      onClick={() => handleToggleLikeComment(comment.id)}
+                      className={`flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg transition-all active:scale-95 ${
                         commentLikes
-                          ? 'clay-btn-primary text-white font-bold'
+                          ? 'clay-btn-primary text-white font-bold ring-1 ring-amber-300'
                           : 'clay-btn-secondary text-slate-600 hover:text-amber-600'
                       }`}
+                      title={commentLikes ? 'Batalkan suka' : 'Beri suka komentar'}
                     >
-                      <ThumbsUp className="w-3 h-3" />
-                      <span className="tabular-nums">{comment.likes}</span>
+                      <ThumbsUp className={`w-3 h-3 ${commentLikes ? 'fill-current text-white' : 'text-slate-400'}`} />
+                      <span className="tabular-nums font-bold">{comment.likes}</span>
                     </button>
 
                     <button
@@ -658,16 +688,14 @@ export const PostDetailPage: React.FC<PostDetailPageProps> = ({
 
                             <div className="mt-2 pl-8">
                               <button
-                                onClick={() => {
-                                  storageService.toggleLikeComment(reply.id, currentUser.id);
-                                  loadData();
-                                }}
-                                className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md ${
-                                  replyLikes ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-amber-600'
+                                onClick={() => handleToggleLikeComment(reply.id)}
+                                className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md transition-all active:scale-95 ${
+                                  replyLikes ? 'text-amber-600 font-bold bg-amber-50' : 'text-slate-500 hover:text-amber-600'
                                 }`}
+                                title={replyLikes ? 'Batalkan suka' : 'Beri suka'}
                               >
-                                <ThumbsUp className="w-2.5 h-2.5" />
-                                <span className="tabular-nums">{reply.likes}</span>
+                                <ThumbsUp className={`w-2.5 h-2.5 ${replyLikes ? 'fill-current text-amber-600' : 'text-slate-400'}`} />
+                                <span className="tabular-nums font-bold">{reply.likes}</span>
                               </button>
                             </div>
                           </div>

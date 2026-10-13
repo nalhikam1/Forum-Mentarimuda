@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Post, Category } from '../types/forum';
-import { storageService } from '../services/storage';
+import { storageService, subscribeToStateChange } from '../services/storage';
 import { formatTimeAgo } from '../utils/slugify';
 import { PollWidget } from './PollWidget';
 import { 
@@ -29,10 +29,45 @@ export const PostCard: React.FC<PostCardProps> = ({
   onPostUpdated,
 }) => {
   const currentUser = storageService.getCurrentUser();
-  const hasLiked = (post.likedByUserIds || []).includes(currentUser.id);
+  const [likes, setLikes] = useState<number>(post.likes);
+  const [hasLiked, setHasLiked] = useState<boolean>((post.likedByUserIds || []).includes(currentUser.id));
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Sync state if post prop changes
+  useEffect(() => {
+    setLikes(post.likes);
+    setHasLiked((post.likedByUserIds || []).includes(currentUser.id));
+  }, [post.likes, post.likedByUserIds, currentUser.id]);
+
+  // Real-time listener for like updates
+  useEffect(() => {
+    const unsub = subscribeToStateChange((event) => {
+      const { eventType, payload } = event.detail || {};
+      if (eventType === 'post_liked' && payload?.postId === post.id) {
+        if (payload.likes !== undefined) {
+          setLikes(payload.likes);
+        }
+        const updatedUser = storageService.getCurrentUser();
+        const freshPost = storageService.getPostBySlug(post.slug);
+        if (freshPost) {
+          setHasLiked((freshPost.likedByUserIds || []).includes(updatedUser.id));
+        }
+      }
+    });
+    return () => unsub();
+  }, [post.id, post.slug]);
 
   const handleLike = (e: React.MouseEvent) => {
     e.stopPropagation();
+
+    // 1. Instant optimistic update
+    const nextHasLiked = !hasLiked;
+    setHasLiked(nextHasLiked);
+    setLikes(prev => nextHasLiked ? prev + 1 : Math.max(0, prev - 1));
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), 300);
+
+    // 2. Persist to storage & trigger real-time events
     storageService.toggleLikePost(post.id, currentUser.id);
     if (onPostUpdated) onPostUpdated();
   };
@@ -185,14 +220,15 @@ export const PostCard: React.FC<PostCardProps> = ({
           {/* Like Button */}
           <button
             onClick={handleLike}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl transition-all ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl transition-all active:scale-95 ${
               hasLiked
-                ? 'clay-btn-primary text-white font-bold'
+                ? 'clay-btn-primary text-white font-bold ring-2 ring-amber-300'
                 : 'clay-btn-secondary text-slate-600 hover:text-amber-600'
-            }`}
+            } ${isAnimating ? 'scale-110' : ''}`}
+            title={hasLiked ? 'Batalkan suka' : 'Beri suka (apresiasi)'}
           >
-            <ThumbsUp className={`w-3.5 h-3.5 ${hasLiked ? 'text-white' : 'text-slate-500'}`} />
-            <span>{post.likes}</span>
+            <ThumbsUp className={`w-3.5 h-3.5 transition-transform ${hasLiked ? 'text-white fill-current' : 'text-slate-500'}`} />
+            <span className="font-bold">{likes}</span>
           </button>
 
           {/* Comments count */}

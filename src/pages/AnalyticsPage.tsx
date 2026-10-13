@@ -10,13 +10,14 @@ import {
   Vote, 
   CheckCircle, 
   Users, 
-  ArrowLeft,
-  Flame,
-  Radio,
-  Zap,
-  BarChart3,
-  ShieldCheck,
-  LogIn
+  ArrowLeft, 
+  Flame, 
+  Radio, 
+  BarChart3, 
+  ShieldCheck, 
+  LogIn,
+  ThumbsUp,
+  RefreshCw
 } from 'lucide-react';
 
 interface AnalyticsPageProps {
@@ -26,13 +27,14 @@ interface AnalyticsPageProps {
 export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
   const [stats, setStats] = useState<CommunityStats>(storageService.getCommunityStats());
   const [activities, setActivities] = useState<ActivityEvent[]>(storageService.getActivityEvents());
-  const [isSimulating, setIsSimulating] = useState(false);
+  const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
   const categories = storageService.getCategories();
   const posts = storageService.getPosts();
 
   const loadData = () => {
     setStats(storageService.getCommunityStats());
     setActivities(storageService.getActivityEvents());
+    setLastRefreshed(new Date());
   };
 
   useEffect(() => {
@@ -43,20 +45,11 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
     return () => unsub();
   }, []);
 
-  const handleTriggerSimulation = () => {
-    setIsSimulating(true);
-    storageService.simulateRandomInteraction();
-    setTimeout(() => {
-      setIsSimulating(false);
-      loadData();
-    }, 400);
-  };
-
   // Compute category distribution
-  const totalPostsCount = Math.max(1, posts.length);
+  const totalPostsCount = posts.length;
   const categoryStats = categories.map(cat => {
     const count = posts.filter(p => p.categorySlug === cat.slug).length;
-    const percentage = Math.round((count / totalPostsCount) * 100);
+    const percentage = totalPostsCount > 0 ? Math.round((count / totalPostsCount) * 100) : 0;
     return {
       ...cat,
       count,
@@ -179,12 +172,12 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
 
         <div className="flex items-center gap-3">
           <button
-            onClick={handleTriggerSimulation}
-            disabled={isSimulating}
+            onClick={() => loadData()}
             className="clay-btn-primary px-4 py-2.5 text-xs font-bold flex items-center gap-2 shadow-md"
+            title="Muat ulang seluruh data analitik"
           >
-            <Zap className="w-4 h-4" />
-            <span>{isSimulating ? 'Memproses...' : 'Simulasikan Interaksi Member'}</span>
+            <RefreshCw className="w-4 h-4" />
+            <span>Muat Ulang Data</span>
           </button>
 
           <button
@@ -220,8 +213,8 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
           <p className="text-3xl font-black text-slate-900 tabular-nums">
             {stats.totalComments}
           </p>
-          <span className="text-[11px] text-emerald-600 font-semibold mt-1.5 block">
-            +18% interaksi minggu ini
+          <span className="text-[11px] text-slate-500 font-medium mt-1.5 block">
+            {stats.totalComments > 0 ? `${stats.totalComments} tanggapan aktif` : 'Belum ada komentar'}
           </span>
         </div>
 
@@ -280,9 +273,9 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
               <div className="grid grid-cols-7 gap-3 items-end h-52 p-4 bg-slate-50/70 rounded-2xl clay-inset">
                 {stats.weeklyActivity.map((dayStat, idx) => {
                   const maxH = 20; // scale factor
-                  const postsHeight = Math.min(100, (dayStat.posts / maxH) * 100);
-                  const commentsHeight = Math.min(100, (dayStat.comments / maxH) * 100);
-                  const votesHeight = Math.min(100, (dayStat.votes / maxH) * 100);
+                  const postsHeight = dayStat.posts > 0 ? Math.min(100, Math.max(8, (dayStat.posts / maxH) * 100)) : 0;
+                  const commentsHeight = dayStat.comments > 0 ? Math.min(100, Math.max(8, (dayStat.comments / maxH) * 100)) : 0;
+                  const votesHeight = dayStat.votes > 0 ? Math.min(100, Math.max(8, (dayStat.votes / maxH) * 100)) : 0;
 
                   return (
                     <div key={idx} className="flex flex-col items-center h-full justify-end gap-1.5">
@@ -290,19 +283,19 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
                         {/* Posts Bar */}
                         <div
                           className="w-2.5 bg-gradient-to-t from-amber-500 to-amber-300 rounded-t-md shadow-xs transition-all duration-500"
-                          style={{ height: `${Math.max(12, postsHeight)}%` }}
+                          style={{ height: `${postsHeight}%` }}
                           title={`Topik: ${dayStat.posts}`}
                         />
                         {/* Comments Bar */}
                         <div
                           className="w-2.5 bg-gradient-to-t from-sky-500 to-sky-300 rounded-t-md shadow-xs transition-all duration-500"
-                          style={{ height: `${Math.max(16, commentsHeight)}%` }}
+                          style={{ height: `${commentsHeight}%` }}
                           title={`Komentar: ${dayStat.comments}`}
                         />
                         {/* Votes Bar */}
                         <div
                           className="w-2.5 bg-gradient-to-t from-purple-500 to-purple-300 rounded-t-md shadow-xs transition-all duration-500"
-                          style={{ height: `${Math.max(14, votesHeight)}%` }}
+                          style={{ height: `${votesHeight}%` }}
                           title={`Voting: ${dayStat.votes}`}
                         />
                       </div>
@@ -331,7 +324,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
                   <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden clay-inset">
                     <div
                       className="h-full bg-gradient-to-r from-amber-400 to-orange-400 rounded-full transition-all duration-700"
-                      style={{ width: `${Math.max(5, cat.percentage)}%` }}
+                      style={{ width: `${cat.count > 0 ? Math.max(5, cat.percentage) : 0}%` }}
                     />
                   </div>
                 </div>
@@ -353,36 +346,46 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ onNavigate }) => {
               </span>
             </div>
 
-            <div className="divide-y divide-slate-100 max-h-[520px] overflow-y-auto pr-1">
-              {activities.map((act) => (
-                <div
-                  key={act.id}
-                  onClick={() => {
-                    if (act.targetSlug) {
-                      onNavigate(`diskusi/${act.targetSlug}`);
-                    }
-                  }}
-                  className="py-3 flex items-start gap-3 cursor-pointer hover:bg-slate-50/70 p-2 rounded-xl transition-colors"
-                >
-                  <img
-                    src={act.userAvatar}
-                    alt={act.userName}
-                    referrerPolicy="no-referrer"
-                    className="w-8 h-8 rounded-xl bg-amber-50 object-cover border border-white shadow-2xs shrink-0"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-slate-700 leading-snug">
-                      <span className="font-bold text-slate-900">{act.userName}</span>{' '}
-                      <span className="text-slate-500">{act.actionText}</span>{' '}
-                      <span className="font-bold text-amber-700">"{act.targetTitle}"</span>
-                    </p>
-                    <span className="text-[10px] text-slate-400 font-mono mt-0.5 block tabular-nums">
-                      {formatTimeAgo(act.timestamp)}
-                    </span>
+            {activities.length === 0 ? (
+              <div className="py-12 text-center text-xs text-slate-400">
+                <Activity className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="font-bold text-slate-600 text-sm">Belum ada aktivitas tercatat</p>
+                <p className="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
+                  Aktivitas member seperti pembuatan topik, voting, dan tanggapan akan muncul otomatis di sini secara real-time.
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-slate-100 max-h-[520px] overflow-y-auto pr-1">
+                {activities.map((act) => (
+                  <div
+                    key={act.id}
+                    onClick={() => {
+                      if (act.targetSlug) {
+                        onNavigate(`diskusi/${act.targetSlug}`);
+                      }
+                    }}
+                    className="py-3 flex items-start gap-3 cursor-pointer hover:bg-slate-50/70 p-2 rounded-xl transition-colors"
+                  >
+                    <img
+                      src={act.userAvatar}
+                      alt={act.userName}
+                      referrerPolicy="no-referrer"
+                      className="w-8 h-8 rounded-xl bg-amber-50 object-cover border border-white shadow-2xs shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-slate-700 leading-snug">
+                        <span className="font-bold text-slate-900">{act.userName}</span>{' '}
+                        <span className="text-slate-500">{act.actionText}</span>{' '}
+                        <span className="font-bold text-amber-700">"{act.targetTitle}"</span>
+                      </p>
+                      <span className="text-[10px] text-slate-400 font-mono mt-0.5 block tabular-nums">
+                        {formatTimeAgo(act.timestamp)}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

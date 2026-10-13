@@ -93,10 +93,10 @@ const ADMIN_USER: User = {
   website: 'https://mentarimuda.id',
   interests: ['Tech Leadership', 'Fullstack Web', 'Youth Empowerment', 'AI Engineering'],
   badges: ['Founder Mentarimuda', 'Admin Utama', 'Pionir Komunitas', 'Verifikasi Resmi'],
-  postCount: 5,
-  answerCount: 15,
-  solutionsCount: 6,
-  karma: 2850,
+  postCount: 0,
+  answerCount: 0,
+  solutionsCount: 0,
+  karma: 0,
   joinedDate: '2025-01-01T00:00:00Z',
 };
 
@@ -114,245 +114,18 @@ const GUEST_USER: User = {
   postCount: 0,
   answerCount: 0,
   solutionsCount: 0,
-  karma: 10,
+  karma: 0,
   joinedDate: new Date().toISOString(),
 };
 
 // Only Admin and Guest exist by default
 const SEED_USERS: User[] = [ADMIN_USER, GUEST_USER];
 
-// Seed Posts — All authored by Admin (Naufal Muhammad Al Hikam)
-const SEED_POSTS: Post[] = [
-  {
-    id: 'post-1',
-    slug: 'polling-stack-web-dan-bahasa-paling-menjanjikan-2026',
-    title: 'Polling: Bahasa Pemrograman atau Stack Web Paling Menjanjikan untuk Fresh Graduate 2026?',
-    content: `Halo rekan-rekan Mentarimuda! Menghadapi era rekrutmen tech terkini dengan integrasi AI tools, menurut kalian keahlian coding manakah yang paling dicari perusahaan rintisan maupun enterprise untuk talenta pemuda Indonesia di tahun 2026?
+// Seed Posts — 100% clean and zeroed out for production
+const SEED_POSTS: Post[] = [];
 
-Silakan berikan voting kalian di bawah dan sertakan alasan di kolom komentar untuk membantu teman-teman yang sedang bersiap magang atau lulus kuliah!`,
-    type: 'polling',
-    categorySlug: 'teknologi-koding',
-    tags: ['Koding', 'Karir', 'WebDev', 'FreshGraduate'],
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    createdAt: new Date(Date.now() - 3600000 * 4).toISOString(),
-    views: 420,
-    likes: 35,
-    likedByUserIds: [ADMIN_USER.id],
-    commentCount: 2,
-    isPinned: true,
-    pollData: {
-      question: 'Stack koding mana yang paling esensial dikuasai pemuda di 2026?',
-      totalVotes: 98,
-      allowMultiple: false,
-      options: [
-        { id: 'opt-1', text: 'TypeScript + React/Next.js & Modern CSS', voteCount: 48, voterIds: [ADMIN_USER.id] },
-        { id: 'opt-2', text: 'Python + AI Agents / Data Engineering', voteCount: 31, voterIds: [] },
-        { id: 'opt-3', text: 'Go (Golang) / Rust untuk High Performance Backend', voteCount: 14, voterIds: [] },
-        { id: 'opt-4', text: 'Mobile Flutter / Kotlin Multiplatform', voteCount: 5, voterIds: [] },
-      ],
-    },
-  },
-  {
-    id: 'post-2',
-    slug: 'bagaimana-cara-menyusun-cv-ats-friendly-untuk-beasiswa-lpdp',
-    title: 'Tanya: Bagaimana cara menyusun CV ATS-friendly untuk beasiswa LPDP dan magang multinasional?',
-    content: `Halo rekan-rekan Mentarimuda! Bagi kalian yang sedang mempersiapkan diri mendaftar beasiswa LPDP maupun magang di institusi multinasional, salah satu filter awal adalah screening Applicant Tracking System (ATS).
-
-Poin penting yang sering menjadi pertanyaan:
-1. Format template seperti apa yang paling aman (format single column vs dua kolom)?
-2. Bagaimana cara mengukur impact (metrik kuantitatif) jika pengalaman organisasi belum memiliki data angka besar?
-3. Apakah format PDF selalu terbaca akurat oleh semua parser?
-
-Simak pembahasan dan solusi terverifikasi di bawah ini!`,
-    type: 'pertanyaan',
-    categorySlug: 'karir-beasiswa',
-    tags: ['Beasiswa', 'LPDP', 'CV-ATS', 'Karir'],
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
-    views: 590,
-    likes: 54,
-    likedByUserIds: [ADMIN_USER.id],
-    commentCount: 2,
-    isSolved: true,
-    acceptedCommentId: 'comment-admin-solusi',
-  },
-  {
-    id: 'post-3',
-    slug: 'membangun-side-income-dari-produk-digital-tanpa-burnout',
-    title: 'Diskusi: Membangun Side-Income dari Produk Digital bagi Pemuda tanpa Terjebak Burnout',
-    content: `Banyak pemuda yang ingin mulai memonetisasi keterampilan kreatif maupun teknis di waktu luang (membuat template, micro-SaaS, konten edukasi, Notion templates, atau assets digital). Namun tantangan terbesarnya adalah konsistensi dan manajemen energi setelah seharian bekerja atau kuliah.
-
-Berikut 3 prinsip utama yang saya terapkan di komunitas Mentarimuda:
-1. **Aturan 45 Menit Terfokus**: Alih-alih maraton 5 jam di akhir pekan, luangkan 45 menit setiap pagi sebelum rutinitas harian dimulai.
-2. **Reuse & Repurpose**: Jangan buat materi dari nol, dokumentasikan apa yang sedang kamu pelajari sehari-hari.
-3. **Validasi Cepat di Komunitas**: Tanyakan langsung ke calon audiens di forum seperti Mentarimuda sebelum menghabiskan waktu berminggu-minggu membangun produk.
-
-Bagaimana pengalaman rekan-rekan sekalian? Apa metode favorit kalian dalam menjaga produktivitas sehat?`,
-    type: 'diskusi',
-    categorySlug: 'bisnis-startup',
-    tags: ['SideIncome', 'Produktivitas', 'DigitalProduct', 'Mindset'],
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    createdAt: new Date(Date.now() - 3600000 * 20).toISOString(),
-    views: 730,
-    likes: 68,
-    likedByUserIds: [ADMIN_USER.id],
-    commentCount: 1,
-  },
-  {
-    id: 'post-4',
-    slug: 'polling-kebiasaan-kerja-favorit-wfa-hybrid-atau-kantor',
-    title: 'Polling: Gaya Bekerja Mana yang Paling Bikin Kamu Produktif & Bahagia?',
-    content: `Diskusi seputar kultur kerja masa kini: Di antara 3 model kerja berikut, mana yang menurutmu memberikan keseimbangan hidup dan akselerasi karir terbaik bagi generasi muda? Berikan suaramu!`,
-    type: 'polling',
-    categorySlug: 'cerita-santai',
-    tags: ['WorkLife', 'WFA', 'Hybrid', 'Opini'],
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    createdAt: new Date(Date.now() - 3600000 * 30).toISOString(),
-    views: 310,
-    likes: 24,
-    likedByUserIds: [ADMIN_USER.id],
-    commentCount: 1,
-    pollData: {
-      question: 'Gaya kerja idaman generasi muda saat ini:',
-      totalVotes: 75,
-      allowMultiple: false,
-      options: [
-        { id: 'opt-wfa-1', text: '100% Remote / Work From Anywhere (Bebas lokasi)', voteCount: 46, voterIds: [ADMIN_USER.id] },
-        { id: 'opt-wfa-2', text: 'Hybrid (2-3 hari kantor, sisanya fleksibel di rumah/kafe)', voteCount: 24, voterIds: [] },
-        { id: 'opt-wfa-3', text: '100% On-site Kantor (Kolaborasi tatap muka langsung)', voteCount: 5, voterIds: [] },
-      ],
-    },
-  },
-  {
-    id: 'post-5',
-    slug: 'pertanyaan-cara-belajar-claymorphism-ui-di-tailwind-css',
-    title: 'Tanya: Prinsip Bayangan & Inner Highlight untuk Desain Claymorphism di CSS?',
-    content: `Dalam mendesain antarmuka bergaya Claymorphism (kotak-kotak empuk 3D seperti mainan tanah liat), kunci utamanya terletak pada perpaduan dua lapis bayangan:
-
-1. Drop-shadow luar yang lembut dan menyebar.
-2. Inner highlight di sudut kiri-atas dipadukan rim shadow di sudut kanan-bawah.
-
-Apakah rekan-rekan memiliki trik CSS khusus untuk mengoptimalkan performa rendering grafis clay pada browser mobile?`,
-    type: 'pertanyaan',
-    categorySlug: 'kreativitas-desain',
-    tags: ['Claymorphism', 'CSS', 'UIUX', 'DesignSystem'],
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
-    views: 460,
-    likes: 42,
-    likedByUserIds: [ADMIN_USER.id],
-    commentCount: 1,
-    isSolved: false,
-  },
-];
-
-// Seed Comments
-const SEED_COMMENTS: Comment[] = [
-  {
-    id: 'comment-admin-solusi',
-    postId: 'post-2',
-    parentId: null,
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    authorBadges: ['Founder Mentarimuda', 'Admin Utama'],
-    content: `Panduan resmi penyusunan CV ATS untuk seleksi beasiswa dan magang:
-
-1. **Tata Letak Single Column**: Format 1 kolom adalah standar paling aman untuk semua parser ATS. Hindari tabel tak kasat mata atau grafik level skill.
-2. **Formula Google XYZ**: "Mencapai [X], diukur dengan [Y], dengan melakukan [Z]". Contoh: "Mengkoordinasi 15 anggota tim dalam program mentoring, meningkatkan kepuasan peserta sebesar 28% melalui kurikulum terstruktur".
-3. **Format & Font Standar**: Gunakan font bersih (Plus Jakarta Sans, Calibri, atau Arial) ukuran 10-11pt dan simpan sebagai file PDF standar.`,
-    createdAt: new Date(Date.now() - 3600000 * 10).toISOString(),
-    likes: 29,
-    likedByUserIds: [ADMIN_USER.id],
-    isAcceptedSolution: true,
-  },
-  {
-    id: 'comment-guest-1',
-    postId: 'post-2',
-    parentId: 'comment-admin-solusi',
-    authorId: 'user-guest',
-    authorName: 'Tamu Mentari',
-    authorAvatar: GUEST_USER.avatar,
-    authorRole: 'guest',
-    authorBadges: ['Pengunjung Kasual'],
-    content: 'Terima kasih atas panduannya, Admin Naufal! Formula Google XYZ sangat aplikatif dan membantu sekali.',
-    createdAt: new Date(Date.now() - 3600000 * 9).toISOString(),
-    likes: 7,
-    likedByUserIds: [ADMIN_USER.id],
-  },
-  {
-    id: 'comment-admin-poll',
-    postId: 'post-1',
-    parentId: null,
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    authorBadges: ['Founder Mentarimuda', 'Admin Utama'],
-    content: 'Kombinasi TypeScript + React/Next.js tetap menjadi fondasi yang kokoh, sementara kemampuan mengintegrasikan AI Agent menjadi akselerator nilai tambah yang sangat dicari industri.',
-    createdAt: new Date(Date.now() - 3600000 * 3).toISOString(),
-    likes: 18,
-    likedByUserIds: [ADMIN_USER.id],
-  },
-  {
-    id: 'comment-admin-prod',
-    postId: 'post-3',
-    parentId: null,
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    authorBadges: ['Founder Mentarimuda'],
-    content: 'Kuncinya adalah jangan menunggu produk sempurna. Rilis versi minimal, mintalah masukan komunitas, dan iterasi secara bertahap.',
-    createdAt: new Date(Date.now() - 3600000 * 18).toISOString(),
-    likes: 12,
-    likedByUserIds: [],
-  },
-  {
-    id: 'comment-guest-wfa',
-    postId: 'post-4',
-    parentId: null,
-    authorId: 'user-guest',
-    authorName: 'Tamu Mentari',
-    authorAvatar: GUEST_USER.avatar,
-    authorRole: 'guest',
-    authorBadges: ['Pengunjung Kasual'],
-    content: 'Saya vote 100% Remote! Sangat menghemat waktu perjalanan dan energi untuk berkarya.',
-    createdAt: new Date(Date.now() - 3600000 * 25).toISOString(),
-    likes: 6,
-    likedByUserIds: [],
-  },
-  {
-    id: 'comment-admin-clay',
-    postId: 'post-5',
-    parentId: null,
-    authorId: ADMIN_USER.id,
-    authorName: ADMIN_USER.displayName,
-    authorAvatar: ADMIN_USER.avatar,
-    authorRole: 'admin',
-    authorBadges: ['Founder Mentarimuda'],
-    content: 'Gunakan will-change: transform pada animasi dan hindari blur radius di atas 24px agar kartu clay tetap mulus di perangkat mobile.',
-    createdAt: new Date(Date.now() - 3600000 * 40).toISOString(),
-    likes: 15,
-    likedByUserIds: [],
-  },
-];
+// Seed Comments — 100% clean and zeroed out
+const SEED_COMMENTS: Comment[] = [];
 
 // Seed Announcements
 const SEED_ANNOUNCEMENTS: Announcement[] = [
@@ -366,67 +139,11 @@ const SEED_ANNOUNCEMENTS: Announcement[] = [
   },
 ];
 
-// Seed Activity Events
-const SEED_ACTIVITIES: ActivityEvent[] = [
-  {
-    id: 'act-1',
-    actionText: 'menerbitkan polling interaktif',
-    userName: ADMIN_USER.displayName,
-    userAvatar: ADMIN_USER.avatar,
-    targetTitle: 'Stack Web Paling Menjanjikan 2026',
-    targetSlug: 'polling-stack-web-dan-bahasa-paling-menjanjikan-2026',
-    type: 'vote',
-    timestamp: new Date(Date.now() - 3600000 * 1).toISOString(),
-  },
-  {
-    id: 'act-2',
-    actionText: 'memberikan solusi terverifikasi pada',
-    userName: ADMIN_USER.displayName,
-    userAvatar: ADMIN_USER.avatar,
-    targetTitle: 'Menyusun CV ATS-friendly untuk Beasiswa LPDP',
-    targetSlug: 'bagaimana-cara-menyusun-cv-ats-friendly-untuk-beasiswa-lpdp',
-    type: 'solve',
-    timestamp: new Date(Date.now() - 3600000 * 2).toISOString(),
-  },
-  {
-    id: 'act-3',
-    actionText: 'memulai diskusi baru',
-    userName: ADMIN_USER.displayName,
-    userAvatar: ADMIN_USER.avatar,
-    targetTitle: 'Membangun Side-Income dari Produk Digital',
-    targetSlug: 'membangun-side-income-dari-produk-digital-tanpa-burnout',
-    type: 'post',
-    timestamp: new Date(Date.now() - 3600000 * 3).toISOString(),
-  },
-];
+// Seed Activity Events — 100% clean and zeroed out
+const SEED_ACTIVITIES: ActivityEvent[] = [];
 
-// Seed Initial Notifications
-const SEED_NOTIFICATIONS: PushNotification[] = [
-  {
-    id: 'notif-1',
-    recipientId: ADMIN_USER.id,
-    senderName: 'Tamu Mentari',
-    senderAvatar: GUEST_USER.avatar,
-    type: 'comment',
-    title: 'Tanggapan Baru di Topik Anda',
-    message: 'Tamu Mentari memberikan komentar apresiasi pada panduan CV ATS.',
-    targetSlug: 'bagaimana-cara-menyusun-cv-ats-friendly-untuk-beasiswa-lpdp',
-    createdAt: new Date(Date.now() - 3600000 * 9).toISOString(),
-    read: false,
-  },
-  {
-    id: 'notif-2',
-    recipientId: ADMIN_USER.id,
-    senderName: 'Sistem Mentarimuda',
-    senderAvatar: ADMIN_USER.avatar,
-    type: 'announcement',
-    title: 'Dashboard Admin Siap Digunakan',
-    message: 'Anda login sebagai Admin Utama (Naufal Muhammad Al Hikam) dengan hak akses penuh.',
-    targetSlug: 'admin',
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-    read: true,
-  },
-];
+// Seed Initial Notifications — 100% clean
+const SEED_NOTIFICATIONS: PushNotification[] = [];
 
 // Event listener for cross-component and cross-tab reactive updates
 const FORUM_EVENT_NAME = 'mentarimuda_state_update';
@@ -453,6 +170,32 @@ export const storageService = {
   // Initialization
   init(): void {
     if (typeof window === 'undefined') return;
+
+    // Automatic purge of all old demo browser storage to enforce 0-data baseline
+    const CLEAN_STORAGE_KEY = 'mentarimuda_zero_data_v1';
+    if (!localStorage.getItem(CLEAN_STORAGE_KEY)) {
+      [
+        'mentarimuda_posts', 'mentarimuda_posts_v4', 'mentarimuda_posts_v5',
+        'mentarimuda_categories', 'mentarimuda_categories_v4', 'mentarimuda_categories_v5',
+        'mentarimuda_comments', 'mentarimuda_comments_v4', 'mentarimuda_comments_v5',
+        'mentarimuda_activities', 'mentarimuda_activities_v4', 'mentarimuda_activities_v5',
+        'mentarimuda_notifications', 'mentarimuda_notifications_v4', 'mentarimuda_notifications_v5',
+        'mentarimuda_users', 'mentarimuda_users_v4', 'mentarimuda_users_v5',
+      ].forEach((key) => {
+        try { localStorage.removeItem(key); } catch {}
+      });
+
+      localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(SEED_POSTS));
+      localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(SEED_CATEGORIES));
+      localStorage.setItem(STORAGE_KEYS.COMMENTS, JSON.stringify(SEED_COMMENTS));
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(SEED_USERS));
+      localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, GUEST_USER.id);
+      localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(SEED_NOTIFICATIONS));
+      localStorage.setItem(STORAGE_KEYS.ANNOUNCEMENTS, JSON.stringify(SEED_ANNOUNCEMENTS));
+      localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_ACTIVITIES));
+      localStorage.setItem(CLEAN_STORAGE_KEY, 'true');
+      return;
+    }
 
     if (!localStorage.getItem(STORAGE_KEYS.POSTS)) {
       localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(SEED_POSTS));
@@ -585,7 +328,7 @@ export const storageService = {
       postCount: 0,
       answerCount: 0,
       solutionsCount: 0,
-      karma: 50,
+      karma: 0,
       joinedDate: new Date().toISOString(),
     };
 
@@ -777,7 +520,6 @@ export const storageService = {
 
     post.likedByUserIds = post.likedByUserIds || [];
     const hasLiked = post.likedByUserIds.includes(userId);
-
     const currentUser = this.getCurrentUser();
 
     if (hasLiked) {
@@ -786,6 +528,16 @@ export const storageService = {
     } else {
       post.likedByUserIds.push(userId);
       post.likes = (post.likes || 0) + 1;
+
+      // Real-time activity log
+      this.logActivity(
+        'menyukai topik',
+        currentUser.displayName,
+        currentUser.avatar,
+        post.title,
+        post.slug,
+        'vote'
+      );
 
       // Notify post author if not self
       if (post.authorId !== userId) {
@@ -801,8 +553,16 @@ export const storageService = {
       }
     }
 
+    // Update author's karma in real-time (+5 on like, -5 on unlike)
+    const users = this.getUsers();
+    const author = users.find(u => u.id === post.authorId);
+    if (author && author.role !== 'guest') {
+      author.karma = Math.max(0, (author.karma || 0) + (hasLiked ? -5 : 5));
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+    }
+
     localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
-    notifyStateChange('post_liked', { postId, hasLiked: !hasLiked });
+    notifyStateChange('post_liked', { postId, likes: post.likes, hasLiked: !hasLiked, post });
     return !hasLiked;
   },
 
@@ -965,6 +725,7 @@ export const storageService = {
 
     comment.likedByUserIds = comment.likedByUserIds || [];
     const hasLiked = comment.likedByUserIds.includes(userId);
+    const currentUser = this.getCurrentUser();
 
     if (hasLiked) {
       comment.likedByUserIds = comment.likedByUserIds.filter(id => id !== userId);
@@ -972,10 +733,43 @@ export const storageService = {
     } else {
       comment.likedByUserIds.push(userId);
       comment.likes = (comment.likes || 0) + 1;
+
+      // Find post for notification & activity
+      const posts = this.getPosts();
+      const post = posts.find(p => p.id === comment.postId);
+
+      this.logActivity(
+        'menyukai komentar pada',
+        currentUser.displayName,
+        currentUser.avatar,
+        post?.title || 'Diskusi',
+        post?.slug || '',
+        'vote'
+      );
+
+      if (comment.authorId !== userId) {
+        this.createNotification({
+          recipientId: comment.authorId,
+          senderName: currentUser.displayName,
+          senderAvatar: currentUser.avatar,
+          type: 'upvote',
+          title: 'Komentar Anda Disukai',
+          message: `${currentUser.displayName} menyukai komentar Anda pada "${(post?.title || 'Diskusi').slice(0, 35)}..."`,
+          targetSlug: post?.slug || '',
+        });
+      }
+    }
+
+    // Update comment author's karma in real-time
+    const users = this.getUsers();
+    const author = users.find(u => u.id === comment.authorId);
+    if (author && author.role !== 'guest') {
+      author.karma = Math.max(0, (author.karma || 0) + (hasLiked ? -5 : 5));
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
     }
 
     localStorage.setItem(STORAGE_KEYS.COMMENTS, JSON.stringify(comments));
-    notifyStateChange('comment_liked', { commentId, hasLiked: !hasLiked });
+    notifyStateChange('comment_liked', { commentId, likes: comment.likes, hasLiked: !hasLiked, comment });
     return !hasLiked;
   },
 
@@ -1190,28 +984,58 @@ export const storageService = {
     const posts = this.getPosts();
     const comments = this.getComments();
     const users = this.getUsers();
+    const activities = this.getActivityEvents();
 
     let totalVotes = 0;
     posts.forEach(p => {
       if (p.pollData) totalVotes += p.pollData.totalVotes;
     });
 
+    const totalLikes = posts.reduce((sum, p) => sum + (p.likes || 0), 0) +
+                       comments.reduce((sum, c) => sum + (c.likes || 0), 0);
+
     const questions = posts.filter(p => p.type === 'pertanyaan');
     const solvedQuestions = questions.filter(p => p.isSolved);
-    const solvedRate = questions.length > 0 ? Math.round((solvedQuestions.length / questions.length) * 100) : 100;
+    const solvedRate = questions.length > 0 ? Math.round((solvedQuestions.length / questions.length) * 100) : 0;
 
-    const days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-    const weeklyActivity = days.map((day, idx) => ({
-      day,
-      posts: Math.max(1, Math.floor((posts.length / 5) * (1 + (idx % 3) * 0.4))),
-      comments: Math.max(2, Math.floor((comments.length / 4) * (1 + ((idx + 1) % 3) * 0.5))),
-      votes: Math.max(3, Math.floor((totalVotes / 4) * (1 + ((idx + 2) % 4) * 0.3))),
-    }));
+    // Real weekly activity calculated from actual item dates
+    const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+    const now = new Date();
+    const weeklyActivity = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now.getTime() - i * 86400000);
+      const dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+      const dayEnd = dayStart + 86400000;
+      const dayName = dayNames[d.getDay()];
+
+      const dayPosts = posts.filter(p => {
+        const t = new Date(p.createdAt).getTime();
+        return t >= dayStart && t < dayEnd;
+      }).length;
+
+      const dayComments = comments.filter(c => {
+        const t = new Date(c.createdAt).getTime();
+        return t >= dayStart && t < dayEnd;
+      }).length;
+
+      const dayVotes = activities.filter(a => {
+        const t = new Date(a.timestamp).getTime();
+        return a.type === 'vote' && t >= dayStart && t < dayEnd;
+      }).length;
+
+      weeklyActivity.push({
+        day: dayName,
+        posts: dayPosts,
+        comments: dayComments,
+        votes: dayVotes,
+      });
+    }
 
     return {
       totalPosts: posts.length,
       totalComments: comments.length,
       totalVotes,
+      totalLikes,
       activeMembers: users.filter(u => !u.isBanned).length,
       solvedRate,
       weeklyActivity,
@@ -1268,57 +1092,5 @@ export const storageService = {
     localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(SEED_NOTIFICATIONS));
     localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(SEED_ACTIVITIES));
     notifyStateChange('data_reset');
-  },
-
-  // SIMULATOR FOR REAL-TIME PUSH NOTIFICATION DEMO
-  simulateRandomInteraction(): PushNotification {
-    const posts = this.getPosts();
-    const currentUser = this.getCurrentUser();
-
-    const randomPost = posts[Math.floor(Math.random() * posts.length)] || posts[0];
-
-    const interactionTypes: { type: PushNotification['type']; title: string; message: string; senderName: string }[] = [
-      {
-        type: 'comment',
-        senderName: 'Tamu Mentari #204',
-        title: 'Komentar Baru Diterima!',
-        message: `Tamu Mentari #204 memberikan tanggapan menarik pada "${randomPost.title.slice(0, 35)}..."`,
-      },
-      {
-        type: 'upvote',
-        senderName: 'Anggota Komunitas',
-        title: 'Apresiasi Topik Komunitas',
-        message: `Seorang anggota baru saja memberikan upvote pada topik "${randomPost.title.slice(0, 30)}..."!`,
-      },
-      {
-        type: 'poll_vote',
-        senderName: 'Pemuda Pemilih',
-        title: 'Suara Baru Masuk ke Polling',
-        message: `Partisipan baru ikut memberikan suara pada topik hangat "${randomPost.title.slice(0, 30)}..."`,
-      },
-    ];
-
-    const pick = interactionTypes[Math.floor(Math.random() * interactionTypes.length)];
-
-    const notif = this.createNotification({
-      recipientId: currentUser.id,
-      senderName: pick.senderName,
-      senderAvatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(pick.senderName)}&backgroundColor=e2e8f0,b6e3f4`,
-      type: pick.type,
-      title: pick.title,
-      message: pick.message,
-      targetSlug: randomPost.slug,
-    });
-
-    this.logActivity(
-      pick.type === 'comment' ? 'menambahkan komentar pada' : pick.type === 'poll_vote' ? 'memilih opsi polling pada' : 'menyukai postingan',
-      pick.senderName,
-      `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(pick.senderName)}&backgroundColor=e2e8f0,b6e3f4`,
-      randomPost.title,
-      randomPost.slug,
-      pick.type === 'comment' ? 'comment' : pick.type === 'poll_vote' ? 'vote' : 'post'
-    );
-
-    return notif;
   },
 };

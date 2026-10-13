@@ -129,6 +129,7 @@ export interface CommunityStats {
   totalPosts: number;
   totalComments: number;
   totalVotes: number;
+  totalLikes: number;
   activeMembers: number;
   solvedRate: number; // percentage
   weeklyActivity: {

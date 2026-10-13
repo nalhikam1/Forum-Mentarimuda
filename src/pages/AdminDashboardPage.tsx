@@ -177,10 +177,10 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
   };
 
   const handleResetData = () => {
-    if (confirm('PERINGATAN: Ini akan mereset seluruh database forum ke data bawaan demo. Lanjutkan?')) {
+    if (confirm('PERINGATAN: Ini akan mereset seluruh database forum ke data bersih awal (0 topik, 0 komentar). Lanjutkan?')) {
       storageService.resetToDefaultData();
       loadData();
-      alert('Data telah direset ke versi demo.');
+      alert('Data telah berhasil direset ke status bersih (0 data).');
     }
   };
 
@@ -395,7 +395,9 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
             <div className="clay-card p-5 bg-white">
               <span className="text-xs font-bold text-slate-400 uppercase">Total Tanggapan</span>
               <p className="text-2xl font-black text-slate-900 mt-1 tabular-nums">{stats.totalComments}</p>
-              <span className="text-[11px] text-slate-500 font-semibold mt-1 block">Rata-rata 3.2 per topik</span>
+              <span className="text-[11px] text-slate-500 font-semibold mt-1 block">
+                {stats.totalPosts > 0 ? `Rata-rata ${(stats.totalComments / stats.totalPosts).toFixed(1)} per topik` : 'Belum ada tanggapan'}
+              </span>
             </div>
             <div className="clay-card p-5 bg-white">
               <span className="text-xs font-bold text-slate-400 uppercase">Tingkat Solusi Q&A</span>
@@ -857,9 +859,9 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
             <div className="p-5 rounded-2xl bg-rose-50/60 border border-rose-200/80 flex flex-col justify-between">
               <div>
                 <RefreshCw className="w-6 h-6 text-rose-600 mb-2" />
-                <h4 className="font-bold text-sm text-slate-900">Reset ke Demo Bawaan</h4>
+                <h4 className="font-bold text-sm text-slate-900">Reset ke Database Bersih (0 Data)</h4>
                 <p className="text-xs text-slate-500 mt-1">
-                  Kembalikan seluruh postingan ke data benih awal Mentarimuda.
+                  Kembalikan seluruh postingan, voting, dan komentar ke status awal kosong (0 data).
                 </p>
               </div>
               <button
